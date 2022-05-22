@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ajouter video</title>
+</head>
+<body>
+<div class="row iscription justify-content-center" >
+ <form class="md-form var" action="{% url 'ajouterVideo' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %} 
+         <div class="form-row">
+               <div class="form-group col-md-6 mb-3">
+                       <label for="titre" ><b>Titre</b></label>
+                       <input type="text" class="form-control" id="titre" name="titre" style="background-color : #161623;border-color: black;color: white;" required >
+                </div>
+          </div>
+          <div class="form-row">
+               <div class="form-group col-md-6">
+                  <label for="desc"><b>Description</b></label>
+                   <textarea class="form-control" maxlength="314"  id="desc" name="description" style="background-color : #161623;border-color: black;color: white; width :420px;height: 200px;resize: none;"  placeholder="description" required></textarea>
+               </div>
+  
+          </div>
+         <div class="file-field">
+             <div class="d-flex justify-content-center">
+                  <div class="btn btn-mdb-color btn-rounded float-left">
+                  <b style="font-size: 20px;">Video</b>
+                  <input type="file" multiple name="video" id="video" required>
+                  </div>
+             </div>
+
+          </div>
+
+
+       <button type="submit" class="btn btn-primary" style="background:  #161623; border-color: aqua; color :white;font-size: 20px; " name="envoyer"><b>Envoyer</b>
+       </button>
+</form> 
+</div>
+</body>
+</html>

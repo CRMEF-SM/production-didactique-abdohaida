@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+{% load static %}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Free Education Template</title>
+    <!-- BOOTSTRAP CORE STYLE CSS -->
+    <link href="{% static 'assets/css/bootstrap.css' %}" rel="stylesheet" />
+    <!-- FONT AWESOME CSS -->
+<link href="{% static 'assets/css/font-awesome.min.css' %}" rel="stylesheet" />
+     <!-- FLEXSLIDER CSS -->
+<link href="{% static 'assets/css/flexslider.css' %}" rel="stylesheet" />
+    <!-- CUSTOM STYLE CSS -->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />    
+  <!-- Google	Fonts -->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css' />
+</head>
+<body >
+   
+ <div class="navbar navbar-inverse navbar-fixed-top " id="menu">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><img class="logo-custom" src="{% static 'assets/img/logo_ministre.png' %}" alt=""  /></a>
+            </div>
+            <div class="navbar-collapse collapse move-me">
+                <ul class="nav navbar-nav navbar-right">
+                    <li ><a href="#home">ACCUEIL</a></li>
+                     <li><a href="#features-sec">COURS</a></li>
+                    <li><a href="#faculty-sec">VIDEOS</a></li>
+                     <li><a href="#course-sec">QUIZES</a></li>
+                     <li><a href="#contact-sec">CONTACT</a></li>
+                </ul>
+            </div>
+           
+        </div>
+    </div>
+      <!--NAVBAR SECTION END-->
+   <div id="faculty-sec" style="background-color: white !important; color: black;">
+    <div class="container set-pad" >
+             <div class="row text-center">
+                 <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                     <h1 data-scroll-reveal="enter from the bottom after 0.1s" class="header-line" style="color: black;">TOUS LES VIDEOS </h1>
+                     <p data-scroll-reveal="enter from the bottom after 0.3s">
+                      dans cette section vous pouvez trouver des videos sur tout ce qui concernt l'informatique (réseau informatique, programmation, architecture, base de données, ...)
+                         </p>
+                 </div>
+
+             </div>
+             <!--/.HEADER LINE END-->
+
+           <div class="row" >
+              {% for vid in video %}
+                 <div class="card col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.4s" style="margin-bottom: 20px;">
+                     <video controls style="width: 100%;">
+                     <source src="{{ vid.videoFile.url}}">
+                       Your browser does not support the video tag.
+                     </video>
+                   <h3 > {{vid.titre}} </h3>
+                 <hr />
+                   <p >
+                       {{vid.description}}
+                       
+                   </p>
+                   <span class='mt-auto'><a href="{% url 'afficherVideo' vid.id %}" class="btn btn-primary con rounded-pill">afficher</a></span>
+                   </div>
+              {% endfor %}   
+               </div>
+             </div>
+        </div>
+<div id="contact-sec"   >
+<div class="overlay">
+ <div class="container set-pad">
+      <div class="row text-center">
+                 <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+                     <h1 data-scroll-reveal="enter from the bottom after 0.1s" class="header-line" >CONTACT US  </h1>
+                     <p data-scroll-reveal="enter from the bottom after 0.3s">
+                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                        Aenean commodo.
+                         Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+                        Aenean commodo.
+                         </p>
+                 </div>
+
+             </div>
+             <!--/.HEADER LINE END-->
+           <div class="row set-row-pad"  data-scroll-reveal="enter from the bottom after 0.5s" >
+           
+               
+                 <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control "  required="required" placeholder="Your Name" />
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control " required="required"  placeholder="Your Email" />
+                        </div>
+                        <div class="form-group">
+                            <textarea name="message" required="required" class="form-control" style="min-height: 150px;" placeholder="Message"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-info btn-block btn-lg">SUBMIT REQUEST</button>
+                        </div>
+
+                    </form>
+                </div>
+               </div>
+                </div>
+          </div> 
+       </div>
+     <div class="container">
+             <div class="row set-row-pad"  >
+    <div class="col-lg-4 col-md-4 col-sm-4   col-lg-offset-1 col-md-offset-1 col-sm-offset-1 " data-scroll-reveal="enter from the bottom after 0.4s">
+
+                    <h2 ><strong>Our Location </strong></h2>
+        <hr />
+                    <div >
+                        <h4>234/80 -UFG , New Street,</h4>
+                        <h4>Switzerland.</h4>
+                        <h4><strong>Call:</strong>  + 67-098-907-1269 / 70 / 71 </h4>
+                        <h4><strong>Email: </strong>info@yourdomain.com</h4>
+                    </div>
+
+
+                </div>
+                 <div class="col-lg-4 col-md-4 col-sm-4   col-lg-offset-1 col-md-offset-1 col-sm-offset-1" data-scroll-reveal="enter from the bottom after 0.4s">
+
+                    <h2 ><strong>Social Conectivity </strong></h2>
+        <hr />
+                    <div >
+                        <a href="#">  <img src="{% static 'assets/img/Social/facebook.png' %}" alt="" /> </a>
+                     <a href="#"> <img src="{% static 'assets/img/Social/google-plus.png' %}" alt="" /></a>
+                     <a href="#"> <img src="{% static 'assets/img/Social/twitter.png' %}" alt="" /></a>
+                    </div>
+                    </div>
+
+
+                </div>
+                 </div>
+     <!-- CONTACT SECTION END-->
+    <div id="footer">
+          &copy 2014 yourdomain.com | All Rights Reserved |  <a href="http://binarytheme.com" style="color: #fff" target="_blank">Design by : binarytheme.com</a>
+    </div>
+     <!-- FOOTER SECTION END-->
+   
+    <!--  Jquery Core Script -->
+    <script src="{% static 'assets/js/jquery-1.10.2.js' %}"></script>
+    <!--  Core Bootstrap Script -->
+    <script src="{% static 'assets/js/bootstrap.js' %}"></script>
+    <!--  Flexslider Scripts --> 
+         <script src="{% static 'assets/js/jquery.flexslider.js' %}"></script>
+     <!--  Scrolling Reveal Script -->
+    <script src="{% static 'assets/js/scrollReveal.js' %}"></script>
+    <!--  Scroll Scripts --> 
+    <script src="{% static 'assets/js/jquery.easing.min.js' %}"></script>
+    <!--  Custom Scripts --> 
+         <script src="{% static 'assets/js/custom.js' %}"></script>
+</body>
+</html>
