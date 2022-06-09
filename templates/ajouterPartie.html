@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ajouter Partie</title>
+</head>
+<body>
+<form class="md-form var" action="{% url 'ajouterPartie' %}" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	titre du partie :<input type="text" name="titrePartie" required>
+	content         : <textarea maxlength="314"  id="content" name="content"  								placeholder="discription" required></textarea>
+	<input type="hidden" name="idChapitre" value="2">
+	<input type="submit" name="ajouter" class="btn btn-info">
+</form>
+</body>
+</html>

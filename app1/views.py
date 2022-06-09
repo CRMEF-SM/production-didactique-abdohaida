@@ -81,3 +81,42 @@ def afficherQuizze(request, id):
 	questions = dumps(data)
 	nbr_questions = len(data)
 	return render(request, 'afficherQuizze.html', locals())
+
+def afficherCours(request, id):
+	return render(request, 'afficherCours.html', locals())
+
+def ajouterCours(request):
+	if request.method == 'POST' and 'ajouter' in request.POST:
+		titreCours = request.POST['titreCours']
+		image = request.FILES['image']
+		description = request.POST['description']
+		cours = Cours.objects.create(titreCours=titreCours, image=image, description=description)
+		cours.save()
+		return render(request, "ajouterCours.html", locals())
+	else:
+		return render(request, "ajouterCours.html", locals())
+
+def ajouterChapitre(request):
+	if request.method == 'POST' and 'ajouter' in request.POST:
+		titreChapitre = request.POST['titreChapitre']
+		idCours = request.POST['idCours']
+		chapitre = Chapitre.objects.create(titreChapitre=titreChapitre)
+		chapitre.save()
+		cours = Cours.objects.get(id=idCours)
+		cours.chapitres.add(chapitre)
+		return render(request, "ajouterChapitre.html", locals())
+	else:
+		return render(request, "ajouterChapitre.html", locals())
+
+def ajouterPartie(request):
+	if request.method == 'POST' and 'ajouter' in request.POST:
+		titrePartie = request.POST['titrePartie']
+		content = request.POST['content']
+		idChapitre = request.POST['idChapitre']
+		partie = Partie.objects.create(titrePartie=titrePartie, content=content)
+		partie.save()
+		chapitre = Chapitre.objects.get(id=idChapitre)
+		chapitre.parties.add(partie)
+		return render(request, "ajouterPartie.html", locals())
+	else:
+		return render(request, "ajouterPartie.html", locals())

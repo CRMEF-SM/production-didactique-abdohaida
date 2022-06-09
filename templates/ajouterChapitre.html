@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ajouter chapitre</title>
+</head>
+<body>
+<form class="md-form var" action="{% url 'ajouterChapitre' %}" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	titre du chapitre       :<input type="text" name="titreChapitre" required>
+	<input type="hidden" name="idCours" value="1">
+	<input type="submit" name="ajouter" class="btn btn-info">
+</form>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ajouter cours</title>
+</head>
+<body>
+<form class="md-form var" action="{% url 'ajouterCours' %}" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	titre du cours       :<input type="text" name="titreCours" required>
+	image du cours       :<input type="file" name="image" required>
+	description du cours : <textarea maxlength="314"  id="description" name="description" placeholder="discription" required></textarea>
+	<input type="submit" name="ajouter" class="btn btn-info">
+</form>
+</body>
+</html>

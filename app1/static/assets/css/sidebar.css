@@ -1,0 +1,18 @@
+.menu{
+    width: 20%;
+    height: 100%;
+    min-height: 250px;
+    float: left;
+    padding: 5px;
+    margin: 10px 0px 10px 10px;
+    background-color: aqua;
+}
+.contenu{
+    width: 78%;
+    height: 100%;
+    min-height: 250px;
+    padding: 10px;
+    float: right;
+    margin: 10px 0px 10px 10px;
+    background-color: orange;
+}

@@ -27,3 +27,27 @@ class Quizze(models.Model):
 
 	def __str__(self):
 		return self.titre
+
+class Partie(models.Model):
+	titrePartie = models.CharField(max_length=100)
+	content = models.TextField()
+
+	def __str__(self):
+		return self.titrePartie
+
+class Chapitre(models.Model):
+	titreChapitre = models.CharField(max_length=100)
+	parties = models.ManyToManyField(Partie)
+
+	def __str__(self):
+		return self.titreChapitre
+
+class Cours(models.Model):
+	titreCours = models.CharField(max_length=100)
+	image = models.ImageField(upload_to='img/cours', default='image')
+	description = models.TextField()
+	chapitres = models.ManyToManyField(Chapitre)
+
+	def __str__(self):
+		return self.titreCours
+
