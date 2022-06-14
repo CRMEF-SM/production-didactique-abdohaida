@@ -15,6 +15,7 @@ from django.core import serializers
 def home(request):
 	video = Video.objects.all()[:3]
 	cours = Cours.objects.all()[:3]
+	quizze = Quizze.objects.all()[:3]
 	return render(request,'index.html',locals())
 
 def ajouterVideo(request):
@@ -36,16 +37,6 @@ def tousVideo(request):
 	video = Video.objects.all()
 	return render(request, 'tousVideo.html', locals())
 
-def ajouterCours(request):
-	#if request.method == 'POST' and 'creer' in request.POST:
-	#	titre = request.POST['titre']
-	#	description = request.POST['description']
-	#	contenue = request.request['contenue']
-	#	cours = Cours.objects.create(titre=titre, description=description,videoFile=videoFile)
-	#	video.save()
-	#	return render(request, 'ajouterVideo.html', locals())
-	#else:
-	return render(request, 'editeur.html', locals())
 
 def ajouterQuestion(request):
 	quizzes = Quizze.objects.all()
@@ -65,8 +56,21 @@ def ajouterQuestion(request):
 	else:
 		return render(request, "ajouterQuestion.html", locals())
 
+def ajouterQuizze(request):
+	if request.method == 'POST' and 'ajouter' in request.POST:
+		titre = request.POST['titre']
+		description = request.POST['description']
+		image = request.FILES['image']
+		quizze = Quizze.objects.create(titre=titre, description=description, image=image)
+		quizze.save()
+		return render(request, "ajouterQuizze.html", locals())
+	else:
+		return render(request, "ajouterQuizze.html", locals())
+
+
 def afficherQuizze(request, id):
-	questions = Question.objects.all()
+	quizze = Quizze.objects.get(id=id)
+	questions = quizze.questions.all()
 	#data = serializers.serialize('json', quest)
 	data = []
 	for quest in questions:
@@ -126,3 +130,7 @@ def ajouterPartie(request):
 		return render(request, "ajouterPartie.html", locals())
 	else:
 		return render(request, "ajouterPartie.html", locals())
+
+def tousCours(request):
+	cours = Cours.objects.all()
+	return render(request, 'tousCours.html', locals())

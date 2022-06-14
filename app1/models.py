@@ -23,6 +23,7 @@ class Question(models.Model):
 class Quizze(models.Model):
 	titre = models.CharField(max_length=100)
 	description = models.TextField()
+	image = models.ImageField(upload_to='img/Quizze', default='image')
 	questions = models.ManyToManyField(Question)
 
 	def __str__(self):

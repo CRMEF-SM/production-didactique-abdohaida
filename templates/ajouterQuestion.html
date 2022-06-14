@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ajouter Question</title>
+</head>
+<body>
+<form class="md-form var" action="{% url 'ajouterQuestion' %}" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	<div class="row">
+		<label> Question </label>
+		<input type="text" name="question" required>
+	</div>
+	<div class="row">
+		<label> Choix 1 </label>
+		<input type="text" name="choix1" required>
+	</div>
+	<div class="row">
+		<label> Choix 2 </label>
+		<input type="text" name="choix2" required>
+	</div>
+	<div class="row">
+		<label> Choix 3 </label>
+		<input type="text" name="choix3" required>
+	</div>
+	<div class="row">
+		<label> Choix 4 </label>
+		<input type="text" name="choix4" required>
+	</div>
+	<div class="row">
+		<label> Reponse </label>
+		<input type="text" name="reponse" required>
+	</div>
+	<input type="hidden" name="quizze_id" value="1">
+	<input type="submit" name="ajouter" class="btn btn-info" value="ajouter">
+</form>
+</body>
+</html>

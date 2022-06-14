@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ajouter Quizze</title>
+</head>
+<body>
+<form class="md-form var" action="{% url 'ajouterQuizze' %}" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	<div class="row">
+		<label> Titre Du Quizze </label>
+		<input type="text" name="titre" required>
+	</div>
+	<div class="row">
+		<label> Image Du Quizze </label>
+		<input type="file" name="image" required>
+	</div>
+	<div class="row">
+		<label> Description Du Cours </label>
+		<textarea  id="description" name="description" placeholder="discription" required> </textarea>
+	</div>
+	<input type="submit" name="ajouter" class="btn btn-info">
+</form>
+</body>
+</html>

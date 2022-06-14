@@ -13,8 +13,9 @@ url(r'^ajouterCours$', views.ajouterCours, name='ajouterCours'),
 url(r'^afficherQuizze/(?P<id>\d+)$', views.afficherQuizze, name='afficherQuizze'),
 url(r'^afficherCours/(?P<id>\d+)$', views.afficherCours, name='afficherCours'),
 url(r'^ajouterQuestion$', views.ajouterQuestion, name='ajouterQuestion'),
-url(r'^ajouterCours$', views.ajouterCours, name='ajouterCours'),
+url(r'^ajouterQuizze$', views.ajouterQuizze, name='ajouterQuizze'),
 url(r'^ajouterChapitre$', views.ajouterChapitre, name='ajouterChapitre'),
 url(r'^ajouterPartie$', views.ajouterPartie, name='ajouterPartie'),
+url(r'^tousCours$', views.tousCours, name='tousCours'),
 
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

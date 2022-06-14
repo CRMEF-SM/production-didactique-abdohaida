@@ -104,7 +104,9 @@
            </div>
            
        </div>
-       <!--HOME SECTION END-->   
+
+       <!--HOME SECTION END--> 
+
     <div  class="tag-line" >
          <div class="container">
            <div class="row  text-center" >
@@ -117,7 +119,11 @@
              </div>
         
     </div>
-    <!--HOME SECTION TAG LINE END-->   
+
+<!--------------------------- END CAROUSEL ------------------------------->
+
+<!----------------------------    COURS    ------------------------------->
+
 <div id="features-sec" class="container set-pad" >
   <div class="row text-center">
     <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
@@ -149,100 +155,82 @@
       </div>
     {% endfor %}           
   </div>
+  <div class="row" align="center" style="margin: 40px;">
+                 <span class='mt-auto'><a href="{% url 'tousCours' %}" class="btn btn-success con rounded-pill">voir tous les cours</a></span>
+               </div>
 </div>
-   <!-- FEATURES SECTION END-->
-    <div id="faculty-sec" style="background-color: #f2f3f5;color: #000;">
-    <div class="container set-pad ">
-             <div class="row text-center">
-                 <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
-                     <h1 data-scroll-reveal="enter from the bottom after 0.1s" class="header-line" style="color: #000;">Nos videos </h1>
-                     <p data-scroll-reveal="enter from the bottom after 0.3s">
-                      dans cette section vous pouvez trouver des videos sur tout ce qui concernt l'informatique (réseau informatique, programmation, architecture, base de données, ...)
-                         </p>
-                 </div>
 
-             </div>
-             <!--/.HEADER LINE END-->
+<!-----------------------------   END COURS  ---------------------------->
 
-           <div class="row " >
-              {% for vid in video %}
-                 <div class="card col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.4s" style="margin-bottom: 20px;">
-                     <video controls style="width: 100%;">
-                     <source src="{{ vid.videoFile.url}}">
-                       Your browser does not support the video tag.
-                     </video>
-                   <h3 > {{vid.titre}} </h3>
-                 <hr />
-                   <p >
-                       {{vid.description}}
-                       
-                   </p>
-                   <span class='mt-auto'><a href="{% url 'afficherVideo' vid.id %}" class="btn btn-primary con rounded-pill">afficher</a></span>
-                   </div>
-              {% endfor %}   
-               </div>
-               <div class="row" align="center" style="margin: 40px;">
-                 <span class='mt-auto'><a href="{% url 'tousVideo' %}" class="btn btn-success con rounded-pill">voir tous les videos</a></span>
-               </div>
-             </div>
-        </div>
+<!-----------------------------   VIDEOS   ------------------------------>
 
-        <div id="features-sec" class="container set-pad" >
-             <div class="row text-center">
-                 <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
-                     <h1 data-scroll-reveal="enter from the bottom after 0.2s"  class="header-line">LISTE DES QUIZZES</h1>
-                     <p data-scroll-reveal="enter from the bottom after 0.3s" >
-                      Si vous voulez tester vos connaissances dans le domaine d'informatique voici une liste des quizes qui tombe dans le même sens
-                         </p>
-                 </div>
+<div id="faculty-sec" style="background-color: #f2f3f5;color: #000;">
+  <div class="container set-pad ">
+    <div class="row text-center">
+      <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+        <h1 data-scroll-reveal="enter from the bottom after 0.1s" class="header-line" style="color: #000;">Nos videos </h1>
+        <p data-scroll-reveal="enter from the bottom after 0.3s">
+        dans cette section vous pouvez trouver des videos sur tout ce qui concernt l'informatique (réseau informatique, programmation, architecture, base de données, ...)
+        </p>
+      </div>
 
-             </div>
-             <!--/.HEADER LINE END-->
+    </div>
 
 
-           <div class="row" >
-           
-               
-                 <div class="col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.4s">
-                     <div class="about-div">
-                     <img src="{% static 'assets/img/Social/facebook.png' %}" class="card-img-top" alt="card3">
-                   <h3 >titre de quizze 1</h3>
-                 <hr />
-                       <hr />
-                   <p >
-                       <--------------- ----------------- description de quizze 1 ----------------- ----------------> 
-                   </p>
-               <a href="#" class="btn btn-info btn-set"  >ACCÉDER</a>
-                </div>
-                   </div>
-                   <div class="col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.5s">
-                     <div class="about-div">
-                     <i class="fa fa-bolt fa-4x icon-round-border" ></i>
-                   <h3 >titre de quizze 2</h3>
-                 <hr />
-                       <hr />
-                   <p >
-                        <---------------- ----------------  description de quizze 2 ------------------ ---------------> 
-                   </p>
-               <a href="#" class="btn btn-info btn-set"  >ACCÉDER</a>
-                </div>
-                   </div>
-                 <div class="col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.6s">
-                     <div class="about-div">
-                     <i class="fa fa-magic fa-4x icon-round-border" ></i>
-                   <h3 >titre de quizze 3</h3>
-                 <hr />
-                       <hr />
-                   <p >
-                      <--------------------------------  description de quizze 3 ---------------------------------> 
-                   </p>
-               <a href="#" class="btn btn-info btn-set"  >ACCÉDER</a>
-                </div>
-                   </div>
-                 
-                 
-               </div>
-             </div>
+    <div class="row " >
+    {% for vid in video %}
+      <div class="card col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.4s" style="margin-bottom: 20px;">
+        <video controls style="width: 100%;">
+          <source src="{{ vid.videoFile.url}}">
+          Your browser does not support the video tag.
+        </video>
+        <h3 > {{vid.titre}} </h3>
+        <hr />
+        <p >
+        {{vid.description | truncatechars:30 }}
+
+        </p>
+        <span class='mt-auto'><a href="{% url 'afficherVideo' vid.id %}" class="btn btn-primary con rounded-pill">afficher</a></span>
+      </div>
+    {% endfor %}   
+    </div>
+    <div class="row" align="center" style="margin: 40px;">
+      <span class='mt-auto'><a href="{% url 'tousVideo' %}" class="btn btn-success con rounded-pill">voir tous les videos</a></span>
+    </div>
+  </div>
+</div>
+
+<!--------------------------    END VIDEOS    ---------------------------------->
+
+<div id="features-sec" class="container set-pad" >
+
+  <div class="row text-center">
+    <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+      <h1 data-scroll-reveal="enter from the bottom after 0.2s"  class="header-line">LISTE DES QUIZZES</h1>
+      <p data-scroll-reveal="enter from the bottom after 0.3s" >
+      Si vous voulez tester vos connaissances dans le domaine d'informatique voici une liste des quizes qui tombe dans le même sens
+      </p>
+    </div>
+
+  </div>
+
+
+  <div class="row" >
+    {% for quiz in quizze %}
+    <div class="col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.4s">
+      <div class="about-div">
+        <img src="{{ quiz.image.url }}" class="card-img-top" alt="card3" width="100%" style="max-height: 120px;">
+        <h3 >{{ quiz.titre | upper }}</h3>
+        <hr />
+        <p >
+          {{ quiz.description | truncatechars:30 }}
+        </p>
+        <a href="{% url 'afficherQuizze' quiz.id %}" class="btn btn-info btn-set"  >ACCÉDER</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
 
 
     <!-- FACULTY SECTION END-->
