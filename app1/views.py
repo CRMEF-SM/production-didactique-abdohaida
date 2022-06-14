@@ -14,6 +14,7 @@ from django.core import serializers
 
 def home(request):
 	video = Video.objects.all()[:3]
+	cours = Cours.objects.all()[:3]
 	return render(request,'index.html',locals())
 
 def ajouterVideo(request):
@@ -83,6 +84,11 @@ def afficherQuizze(request, id):
 	return render(request, 'afficherQuizze.html', locals())
 
 def afficherCours(request, id):
+	cours = Cours.objects.get(id=id)
+	chapitres = cours.chapitres.all()
+	parties = {}
+	for chap in chapitres:
+		parties[chap.titreChapitre]=chap.parties.all()
 	return render(request, 'afficherCours.html', locals())
 
 def ajouterCours(request):

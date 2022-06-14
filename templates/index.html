@@ -69,7 +69,7 @@
                         <!-- Slider 02 -->
                         <li>
                             <h3>Dépôt De Ressources Pédagogiques</h3>
-                           <h1>APPRENDRE AVEC SON PROPRE RYTHME</h1>
+                           <h1>CHACUN APPRENDRE AVEC SON PROPRE RYTHME</h1>
                              <a  href="#course-sec" class="btn btn-primary btn-lg" >
                                 STATISTIQUES 
                             </a>
@@ -118,65 +118,38 @@
         
     </div>
     <!--HOME SECTION TAG LINE END-->   
-         <div id="features-sec" class="container set-pad" >
-             <div class="row text-center">
-                 <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
-                     <h1 data-scroll-reveal="enter from the bottom after 0.2s"  class="header-line">LISTE DES COURS</h1>
-                     <p data-scroll-reveal="enter from the bottom after 0.3s" >
-                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                        Aenean commodo.
-                         Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                        Aenean commodo.
-                         </p>
-                 </div>
+<div id="features-sec" class="container set-pad" >
+  <div class="row text-center">
+    <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+        <h1 data-scroll-reveal="enter from the bottom after 0.2s"  class="header-line">LISTE DES COURS</h1>
+        <p data-scroll-reveal="enter from the bottom after 0.3s" >
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+            Aenean commodo.
+             Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
+            Aenean commodo.
+        </p>
+    </div>
 
-             </div>
-             <!--/.HEADER LINE END-->
+  </div>
+      <!--/.HEADER LINE END-->
 
-
-           <div class="row" >
-           
-               
-                 <div class="col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.4s">
-                     <div class="about-div">
-                     <img src="{% static 'assets/img/Social/facebook.png' %}" class="card-img-top" alt="card3">
-                   <h3 >Nom de cours 1</h3>
-                 <hr />
-                       <hr />
-                   <p >
-                       <--------------- ----------------- description des cours 1 ----------------- ----------------> 
-                   </p>
-               <a href="#" class="btn btn-info btn-set"  >DÉTAILS</a>
-                </div>
-                   </div>
-                   <div class="col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.5s">
-                     <div class="about-div">
-                     <i class="fa fa-bolt fa-4x icon-round-border" ></i>
-                   <h3 >Nom de cours 2</h3>
-                 <hr />
-                       <hr />
-                   <p >
-                        <---------------- ----------------  description des cours 2 ------------------ ---------------> 
-                   </p>
-               <a href="#" class="btn btn-info btn-set"  >DÉTAILS</a>
-                </div>
-                   </div>
-                 <div class="col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.6s">
-                     <div class="about-div">
-                     <i class="fa fa-magic fa-4x icon-round-border" ></i>
-                   <h3 >Nom de cours 3</h3>
-                 <hr />
-                       <hr />
-                   <p >
-                      <--------------------------------  description des cours 3 ---------------------------------> 
-                   </p>
-               <a href="#" class="btn btn-info btn-set"  >DÉTAILS</a>
-                </div>
-                   </div>
-                 
-                 
-               </div>
-             </div>
+  <div class="row" >
+    {% for cour in cours %}
+      <div class="card col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.4s" style="margin-bottom: 20px; ">
+          <div class="about-div" style="background: rgba(200,200,200,0.5); min-height: 400px;">
+              <img src="{{ cour.image.url }}" class="card-img-top" alt="card3" width="100%" style="max-height: 120px;">
+              <h3 >{{ cour.titreCours | upper }}</h3>
+              <hr/>
+              <hr />
+              <p>
+              {{ cour.description | truncatechars:30 }} 
+              </p>
+              <a href="{% url 'afficherCours' cour.id %}" class="btn btn-info btn-set"  >DÉTAILS</a>
+          </div>
+      </div>
+    {% endfor %}           
+  </div>
+</div>
    <!-- FEATURES SECTION END-->
     <div id="faculty-sec" style="background-color: #f2f3f5;color: #000;">
     <div class="container set-pad ">

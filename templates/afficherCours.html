@@ -19,7 +19,7 @@
   <!-- Google	Fonts -->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css' />
 </head>
-<body >
+<body onload="show('{{ cours.titreCours }}');">
    
  <div class="navbar navbar-inverse navbar-fixed-top " id="menu">
         <div class="container">
@@ -48,17 +48,32 @@
 <!-- Sidebar -->
 <div class="container" style="margin-top: 65px;">
  <div class="menu">
-     <h2> Nom du cours </h2>
+     <h2 align="center"> {{ cours.titreCours }} </h2>
      <ul>
-         <li><a href="#"> Introduction </a></li>
-         <li><a href="#"> Chapitre 1 </a></li>
-         <li><a href="#"> Chapitre 2 </a></li>
-         <li><a href="#"> Chapitre 3 </a></li>
-         <li><a href="#"> Chapitre 4 </a></li>
+         {% for chap in chapitres%}
+            <li><a href="#" onclick="show({{chap.id}});"> {{chap.titreChapitre}} </a></li>
+         {% endfor %}
      </ul>
  </div>  
  <div class="contenu">
-     
+        <section id= '{{ cours.titreCours }}' class="sec">
+            <h1>{{cours.titreCours}}</h1>
+            <img src="{{ cours.image.url }}" width="80%">
+            <h5>{{cours.description}}</h5>
+        </section>
+     {% for chap in chapitres %}
+        <section id= '{{chap.id}}' class="sec">
+            <h1>{{chap.titreChapitre}}</h1>
+            {% for cle, val in parties.items %}
+                {% if cle == chap.titreChapitre %}
+                    {% for part in val %}
+                        <h3>{{part.titrePartie}}</h3>
+                        <p>{{part.content}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+        </section>
+     {% endfor %}
  </div>
 </div>
       
@@ -151,5 +166,16 @@
     <script src="{% static 'assets/js/jquery.easing.min.js' %}"></script>
     <!--  Custom Scripts --> 
          <script src="{% static 'assets/js/custom.js' %}"></script>
+    <script type="text/javascript">
+        function show(idSection) {
+            var sections = document.getElementsByClassName('sec');
+            var i;
+            for (i=0;i<sections.length;i++)
+            {
+                sections[i].style.display='none';
+            }
+            document.getElementById(idSection).style.display='block';
+        }
+    </script>
 </body>
 </html>
