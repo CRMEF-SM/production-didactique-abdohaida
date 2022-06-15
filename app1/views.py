@@ -134,3 +134,16 @@ def ajouterPartie(request):
 def tousCours(request):
 	cours = Cours.objects.all()
 	return render(request, 'tousCours.html', locals())
+
+def deleteCours(request, id):
+	cours = Cours.objects.get(id=id)
+	for chap in cours.chapitres.all():
+		for part in chap.parties.all():
+			part.delete()
+		chap.delete()
+	cours.delete()
+	cours = Cours.objects.all()
+	return render(request, 'tousCours.html', locals())
+
+def adminPanel(request):
+	return render(request, 'admin.html', locals())

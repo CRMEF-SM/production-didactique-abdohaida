@@ -17,5 +17,7 @@ url(r'^ajouterQuizze$', views.ajouterQuizze, name='ajouterQuizze'),
 url(r'^ajouterChapitre$', views.ajouterChapitre, name='ajouterChapitre'),
 url(r'^ajouterPartie$', views.ajouterPartie, name='ajouterPartie'),
 url(r'^tousCours$', views.tousCours, name='tousCours'),
+url(r'^adminPanel$', views.adminPanel, name='adminPanel'),
+url(r'^deleteCours/(?P<id>\d+)$', views.deleteCours, name='deleteCours'),
 
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
