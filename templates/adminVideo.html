@@ -29,13 +29,13 @@
           </a>
         </li>
         <li>
-          <a href="#" class="active">
+          <a href="{% url 'adminCours' %}">
             <i class='bx bx-book-alt' ></i>
             <span class="links_name">Cours</span>
           </a>
         </li>
         <li>
-          <a href="{% url 'adminVideo' %}">
+          <a href="#" class="active">
             <i class='bx bxs-video' ></i>
             <span class="links_name">Video</span>
           </a>
@@ -69,21 +69,30 @@
         <input type="text" placeholder="Search...">
         <i class='bx bx-search' ></i>
       </div>
+      <div >
+        <a href="#" class="btn btn-success btn-set"  >ajouter video</a>
+      </div>
     </nav>
 
-    <div class="home-content container" style="width: 70%;">
-    	<form class="md-form var" action="{% url 'ajouterChapitre' %}" method="post" enctype="multipart/form-data">
-		{% csrf_token %}
-		<div class="form-group">
-        	<label for="titreChapitre">titre du chapitre </label>
-        	<input type="text" name="titreChapitre" class="form-control" required />
+    <div class="home-content">
+      <div class="overview-boxes" >
+      {% for vid in video %}
+        <div class="box">
+            <div class="right-side" style="min-width: 90%;">
+              <video controls style="width: 100%;">
+                  <source src="{{ vid.videoFile.url}}">
+                  Your browser does not support the video tag.
+              </video>
+              <h3 > {{vid.titre | upper}} </h3>
+              <p >
+                    {{vid.description | truncatechars:30 }}  
+              </p>
+              <a href="#" class="btn btn-danger btn-set"  >delete</a>
+              <a href="#" class="btn btn-primary btn-set"  >edite</a>
+          </div>
         </div>
-        <input type="hidden" name="idCours" value="{{idCours}}">
-        <div class="form-group">
-        	<input type="submit" name="ajouter" class="btn btn-info">
-        </div>
-	</form>
-</div>
+      {% endfor %}           
+      </div>
   </section>
 
 <script>

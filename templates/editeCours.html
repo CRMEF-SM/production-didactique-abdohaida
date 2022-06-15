@@ -69,21 +69,41 @@
         <input type="text" placeholder="Search...">
         <i class='bx bx-search' ></i>
       </div>
+      <div >
+        <form class="md-form var" action="{% url 'ajouterChapitre' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <input type="hidden" name="idCours" value="{{cours.id}}">
+          <input type="submit" name="ajouterChapitre" class="btn btn-success" value="ajouter chapitre">
+        </form>
+      </div>
     </nav>
 
-    <div class="home-content container" style="width: 70%;">
-    	<form class="md-form var" action="{% url 'ajouterChapitre' %}" method="post" enctype="multipart/form-data">
-		{% csrf_token %}
-		<div class="form-group">
-        	<label for="titreChapitre">titre du chapitre </label>
-        	<input type="text" name="titreChapitre" class="form-control" required />
-        </div>
-        <input type="hidden" name="idCours" value="{{idCours}}">
-        <div class="form-group">
-        	<input type="submit" name="ajouter" class="btn btn-info">
-        </div>
-	</form>
-</div>
+    <div class="home-content container" style="width: 85%;">
+      <h4 class="alert alert-info">/{{cours.titreCours}}</h4>
+    	<table width="95%" style="border-collapse: separate; border-spacing: 2px;">
+       <tr style="padding-bottom: 5px; border-bottom: solid 2px ;">
+         <th>nom Chapitre</th>
+         <th>nombre de partie</th>
+         <th>edite</th>
+         <th>delete</th>
+       </tr> 
+       {% for chap in chapitres %}
+       <tr>
+         <td>{{chap.titreChapitre}}</td>
+         <td>
+           {% for cle, val in parties.items %}
+                {% if cle == chap.titreChapitre %}
+                    {{val}}
+                {% endif %}
+            {% endfor %}
+         </td>
+         <td><a href="#" class="btn btn-primary btn-set"  >edite</a></td>
+         <td><a href="#" class="btn btn-danger btn-set"  >delete</a></td>
+       </tr>
+       {% endfor %}
+       
+      </table>
+    </div>
   </section>
 
 <script>

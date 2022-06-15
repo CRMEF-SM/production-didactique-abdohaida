@@ -95,6 +95,14 @@ def afficherCours(request, id):
 		parties[chap.titreChapitre]=chap.parties.all()
 	return render(request, 'afficherCours.html', locals())
 
+def editeCours(request, id):
+	cours = Cours.objects.get(id=id)
+	chapitres = cours.chapitres.all()
+	parties = {}
+	for chap in chapitres:
+		parties[chap.titreChapitre]=len(chap.parties.all())
+	return render(request, 'editeCours.html', locals())
+
 def ajouterCours(request):
 	if request.method == 'POST' and 'ajouter' in request.POST:
 		titreCours = request.POST['titreCours']
@@ -102,7 +110,8 @@ def ajouterCours(request):
 		description = request.POST['description']
 		cours = Cours.objects.create(titreCours=titreCours, image=image, description=description)
 		cours.save()
-		return render(request, "ajouterCours.html", locals())
+		cours = Cours.objects.all()
+		return render(request, "adminCours.html", locals())
 	else:
 		return render(request, "ajouterCours.html", locals())
 
@@ -114,8 +123,9 @@ def ajouterChapitre(request):
 		chapitre.save()
 		cours = Cours.objects.get(id=idCours)
 		cours.chapitres.add(chapitre)
-		return render(request, "ajouterChapitre.html", locals())
+		return redirect('editeCours',idCours)
 	else:
+		idCours = request.POST['idCours']
 		return render(request, "ajouterChapitre.html", locals())
 
 def ajouterPartie(request):
@@ -146,4 +156,26 @@ def deleteCours(request, id):
 	return render(request, 'tousCours.html', locals())
 
 def adminPanel(request):
+	cours = Cours.objects.all()
+	video = Video.objects.all()
+	quizze = Quizze.objects.all()
+	nbrCours = len(cours)
+	nbrVideo = len(video)
+	nbrQuizze = len(quizze)
 	return render(request, 'admin.html', locals())
+
+def tousQuizze(request):
+	quizze = Quizze.objects.all()
+	return render(request, 'tousQuizze.html', locals())
+
+def adminCours(request):
+	cours = Cours.objects.all()
+	return render(request, 'adminCours.html', locals())
+
+def adminVideo(request):
+	video = Video.objects.all()
+	return render(request, 'adminVideo.html', locals())
+
+def adminQuizze(request):
+	quizze = Quizze.objects.all()
+	return render(request, 'adminQuizze.html', locals())

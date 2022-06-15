@@ -69,21 +69,27 @@
         <input type="text" placeholder="Search...">
         <i class='bx bx-search' ></i>
       </div>
+      <div >
+        <a href="{% url 'ajouterCours' %}" class="btn btn-success btn-set"  >ajouter cours</a>
+      </div>
     </nav>
 
-    <div class="home-content container" style="width: 70%;">
-    	<form class="md-form var" action="{% url 'ajouterChapitre' %}" method="post" enctype="multipart/form-data">
-		{% csrf_token %}
-		<div class="form-group">
-        	<label for="titreChapitre">titre du chapitre </label>
-        	<input type="text" name="titreChapitre" class="form-control" required />
+    <div class="home-content">
+      <div class="overview-boxes" >
+      {% for cour in cours %}
+        <div class="box" style="margin: 5px;">
+            <div class="right-side" style="min-width: 90%;">
+            <img src="{{ cour.image.url }}" class="card-img-top" alt="card3" width="100%" style="max-height: 120px;">
+            <h3 >{{ cour.titreCours | upper }}</h3>
+            <p>
+              {{ cour.description | truncatechars:30 }} 
+            </p>
+            <a href="{% url 'afficherCours' cour.id %}" class="btn btn-danger btn-set"  >delete</a>
+            <a href="{% url 'editeCours' cour.id %}" class="btn btn-primary btn-set"  >edite</a>
+          </div>
         </div>
-        <input type="hidden" name="idCours" value="{{idCours}}">
-        <div class="form-group">
-        	<input type="submit" name="ajouter" class="btn btn-info">
-        </div>
-	</form>
-</div>
+      {% endfor %}           
+      </div>
   </section>
 
 <script>

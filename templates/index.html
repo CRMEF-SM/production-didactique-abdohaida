@@ -32,11 +32,11 @@
             </div>
             <div class="navbar-collapse collapse move-me">
                 <ul class="nav navbar-nav navbar-right">
-                    <li ><a href="#home">ACCUEIL</a></li>
-                     <li><a href="#features-sec">COURS</a></li>
-                    <li><a href="#faculty-sec">VIDEOS</a></li>
-                     <li><a href="#course-sec">QUIZES</a></li>
-                     <li><a href="#contact-sec">CONTACT</a></li>
+                    <li><a href="#home"><i class="bx bxs-home" ></i> ACCUEIL</a></li>
+                     <li><a href="#features-sec"><i class="bx bxs-book" ></i> COURS</a></li>
+                    <li><a href="#faculty-sec"><i class="bx bxs-video" ></i> VIDEOS</a></li>
+                     <li><a href="#course-sec"><i class="bx bxs-pencil" ></i> QUIZES</a></li>
+                     <li><a href="#contact-sec"><i class="bx bxs-contact" ></i> CONTACT</a></li>
                 </ul>
             </div>
            
@@ -230,6 +230,9 @@
     </div>
     {% endfor %}
   </div>
+  <div class="row" align="center" style="margin: 40px;">
+      <span class='mt-auto'><a href="{% url 'tousQuizze' %}" class="btn btn-success con rounded-pill">voir tous les quizzes</a></span>
+    </div>
 </div>
 
 

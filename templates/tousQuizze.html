@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Free Education Template</title>
+    <title>tous les cours</title>
     <!-- BOOTSTRAP CORE STYLE CSS -->
     <link href="{% static 'assets/css/bootstrap.css' %}" rel="stylesheet" />
     <!-- FONT AWESOME CSS -->
@@ -32,11 +32,11 @@
             </div>
             <div class="navbar-collapse collapse move-me">
                 <ul class="nav navbar-nav navbar-right">
-                    <li ><a href="#home">ACCUEIL</a></li>
-                     <li><a href="#features-sec">COURS</a></li>
-                    <li><a href="#faculty-sec">VIDEOS</a></li>
-                     <li><a href="#course-sec">QUIZES</a></li>
-                     <li><a href="#contact-sec">CONTACT</a></li>
+                    <li><a href="#home"><i class="bx bxs-home" ></i> ACCUEIL</a></li>
+                     <li><a href="#features-sec"><i class="bx bxs-book" ></i> COURS</a></li>
+                    <li><a href="#faculty-sec"><i class="bx bxs-video" ></i> VIDEOS</a></li>
+                     <li><a href="#course-sec"><i class="bx bxs-pencil" ></i> QUIZES</a></li>
+                     <li><a href="#contact-sec"><i class="bx bxs-contact" ></i> CONTACT</a></li>
                 </ul>
             </div>
            
@@ -46,34 +46,33 @@
    <div id="faculty-sec" style="background-color: white !important; color: black;">
     <div class="container set-pad" >
              <div class="row text-center">
-                 <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
-                     <h1 data-scroll-reveal="enter from the bottom after 0.1s" class="header-line" style="color: black;">TOUS LES VIDEOS </h1>
-                     <p data-scroll-reveal="enter from the bottom after 0.3s">
-                      dans cette section vous pouvez trouver des videos sur tout ce qui concernt l'informatique (réseau informatique, programmation, architecture, base de données, ...)
-                         </p>
-                 </div>
+    <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
+      <h1 data-scroll-reveal="enter from the bottom after 0.2s"  class="header-line">LISTE DES QUIZZES</h1>
+      <p data-scroll-reveal="enter from the bottom after 0.3s" >
+      Si vous voulez tester vos connaissances dans le domaine d'informatique voici une liste des quizes qui tombe dans le même sens
+      </p>
+    </div>
 
-             </div>
-             <!--/.HEADER LINE END-->
+  </div>
 
-                <div class="row" >
-                {% for cour in cours %}
-                    <div class="card col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.4s" style="margin-bottom: 20px; ">
-                        <div class="about-div" style="background: rgba(200,200,200,0.5); min-height: 400px;">
-                            <img src="{{ cour.image.url }}" class="card-img-top" alt="card3" width="100%" style="max-height: 120px;">
-                            <h3 >{{ cour.titreCours | upper }}</h3>
-                            <hr/>
-                            <hr />
-                            <p>
-                            {{ cour.description | truncatechars:30 }} 
-                            </p>
-                            <a href="{% url 'afficherCours' cour.id %}" class="btn btn-info btn-set"  >DÉTAILS</a>
-                        </div>
-                    </div>
-                {% endfor %}           
-                </div>
-             </div>
-        </div>
+
+  <div class="row" >
+    {% for quiz in quizze %}
+    <div class="col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.4s">
+      <div class="about-div">
+        <img src="{{ quiz.image.url }}" class="card-img-top" alt="card3" width="100%" style="max-height: 120px;">
+        <h3 >{{ quiz.titre | upper }}</h3>
+        <hr />
+        <p >
+          {{ quiz.description | truncatechars:30 }}
+        </p>
+        <a href="{% url 'afficherQuizze' quiz.id %}" class="btn btn-info btn-set"  >ACCÉDER</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+</div>
 <div id="contact-sec"   >
 <div class="overlay">
  <div class="container set-pad">
