@@ -29,7 +29,7 @@
           </a>
         </li>
         <li>
-          <a href="#" class="active">
+          <a href="{% url 'adminCours' %}" class="active">
             <i class='bx bx-book-alt' ></i>
             <span class="links_name">Cours</span>
           </a>
@@ -84,7 +84,7 @@
             <p>
               {{ cour.description | truncatechars:30 }} 
             </p>
-            <a href="{% url 'afficherCours' cour.id %}" class="btn btn-danger btn-set"  >delete</a>
+            <a href="{% url 'deleteCours' cour.id %}" class="btn btn-danger btn-set"  >delete</a>
             <a href="{% url 'editeCours' cour.id %}" class="btn btn-primary btn-set"  >edite</a>
           </div>
         </div>

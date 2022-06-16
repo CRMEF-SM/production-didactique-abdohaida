@@ -29,7 +29,7 @@
           </a>
         </li>
         <li>
-          <a href="#" class="active">
+          <a href="{% url 'adminCours' %}" class="active">
             <i class='bx bx-book-alt' ></i>
             <span class="links_name">Cours</span>
           </a>
@@ -79,7 +79,29 @@
     </nav>
 
     <div class="home-content container" style="width: 85%;">
-      <h4 class="alert alert-info">/{{cours.titreCours}}</h4>
+      <h4 class="alert alert-info"><a onclick="show();">/{{cours.titreCours}}</a></h4>
+      <div id="fr" style="display: none;">
+        <form class="md-form var" action="{% url 'editeCours' cours.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+          <div class="form-group">
+            <label for="titreCours">titre du cours</label>
+            <input type="text" name="titreCours" class="form-control" 
+           value="{{cours.titreCours}}" required />
+          </div>
+          <div class="form-group">
+            <label for="description">description du cours</label>
+            <textarea   id="description" rows="6" name="description" placeholder="discription" class="form-control" required>{{cours.description}}</textarea>
+          </div>
+          <div class="form-group">
+            <label for="image">image du cours</label>
+            <input type="file" multiple name="image" id="image" required>
+          </div>
+          <div class="form-group">
+            <input type="submit" name="editeCours" class="btn btn-info">
+          </div>
+        </form>
+      </div>
+      <div id="tab">
     	<table width="95%" style="border-collapse: separate; border-spacing: 2px;">
        <tr style="padding-bottom: 5px; border-bottom: solid 2px ;">
          <th>nom Chapitre</th>
@@ -97,13 +119,14 @@
                 {% endif %}
             {% endfor %}
          </td>
-         <td><a href="#" class="btn btn-primary btn-set"  >edite</a></td>
-         <td><a href="#" class="btn btn-danger btn-set"  >delete</a></td>
+         <td><a href="{% url 'editeChapitre' idCours=cours.id idChapitre=chap.id %}" class="btn btn-primary btn-set"  >edite</a></td>
+         <td><a href="{% url 'deleteChapitre' idCours=cours.id idChapitre=chap.id %}" class="btn btn-danger btn-set"  >delete</a></td>
        </tr>
        {% endfor %}
        
       </table>
     </div>
+  </div>
   </section>
 
 <script>
@@ -117,6 +140,18 @@
       }
       else
       sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+      }
+    function show() {
+        if(document.getElementById('fr').style.display=="none")
+        {
+          document.getElementById('fr').style.display = 'block';
+          document.getElementById('tab').style.display = 'none';
+        }
+        else
+        {
+          document.getElementById('fr').style.display = 'none';
+          document.getElementById('tab').style.display = 'block';
+        }
       }
  </script>
 

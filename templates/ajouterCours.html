@@ -29,7 +29,7 @@
           </a>
         </li>
         <li>
-          <a href="#" class="active">
+          <a href="{% url 'adminCours' %}" class="active">
             <i class='bx bx-book-alt' ></i>
             <span class="links_name">Cours</span>
           </a>
@@ -79,12 +79,12 @@
         	<input type="text" name="titreCours" class="form-control" required />
         </div>
         <div class="form-group">
-        	<label for="image">image du cours</label>
-        	<input type="file" name="image" class="form-control" required />
-        </div>
-        <div class="form-group">
         	<label for="description">description du cours</label>
         	<textarea   id="description" rows="6" name="description" placeholder="discription" class="form-control" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="image">image du cours</label>
+          <input type="file" multiple name="image" id="image" required>
         </div>
         <div class="form-group">
         	<input type="submit" name="ajouter" class="btn btn-info">

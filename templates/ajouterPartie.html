@@ -29,7 +29,7 @@
           </a>
         </li>
         <li>
-          <a href="#" class="active">
+          <a href="{% url 'adminCours' %}" class="active">
             <i class='bx bx-book-alt' ></i>
             <span class="links_name">Cours</span>
           </a>
@@ -82,7 +82,8 @@
         	<label for="content">content</label>
         	<textarea   id="content" rows="12" name="content" placeholder="content" class="form-control" required></textarea>
         </div>
-        <input type="hidden" name="idChapitre" value="5">
+        <input type="hidden" name="idChapitre" value="{{idChapitre}}"/>
+        <input type="hidden" name="idCours" value="{{idCours}}"/>
         <div class="form-group">
         	<input type="submit" name="ajouter" class="btn btn-info">
         </div>

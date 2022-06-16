@@ -41,7 +41,7 @@
           </a>
         </li>
         <li>
-          <a href="#" class="active">
+          <a href="{% url 'adminQuizze' %}" class="active">
             <i class='bx bx-pencil' ></i>
             <span class="links_name">Quizze</span>
           </a>
@@ -70,22 +70,22 @@
         <i class='bx bx-search' ></i>
       </div>
       <div >
-        <a href="#" class="btn btn-success btn-set"  >ajouter quizze</a>
+        <a href="{% url 'ajouterQuizze' %}" class="btn btn-success btn-set"  >ajouter quizze</a>
       </div>
     </nav>
 
     <div class="home-content">
       <div class="overview-boxes" >
       {% for quiz in quizze %}
-        <div class="box">
+        <div class="box" style="margin: 5px;">
             <div class="right-side" style="min-width: 90%;">
             <img src="{{ quiz.image.url }}" class="card-img-top" alt="card3" width="100%" style="max-height: 120px;">
             <h3 >{{ quiz.titre | upper }}</h3>
             <p>
               {{ quiz.description | truncatechars:30 }} 
             </p>
-            <a href="{#" class="btn btn-danger btn-set"  >delete</a>
-            <a href="#" class="btn btn-primary btn-set"  >edite</a>
+            <a href="{% url 'deleteQuizze' quiz.id %}" class="btn btn-danger btn-set"  >delete</a>
+            <a href="{% url 'editeQuizze' quiz.id %}" class="btn btn-primary btn-set"  >edite</a>
           </div>
         </div>
       {% endfor %}           
