@@ -14,7 +14,7 @@
      <!-- FLEXSLIDER CSS -->
 <link href="{% static 'assets/css/flexslider.css' %}" rel="stylesheet" />
     <!-- CUSTOM STYLE CSS -->
-    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />    
+    <link href="{% static 'assets/css/style.css' %}?{% now 'U' %}" rel="stylesheet" />    
   <!-- Google	Fonts -->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css' />
 </head>
@@ -35,7 +35,7 @@
                     <li><a href="#home"><i class="bx bxs-home" ></i> ACCUEIL</a></li>
                      <li><a href="#features-sec"><i class="bx bxs-book" ></i> COURS</a></li>
                     <li><a href="#faculty-sec"><i class="bx bxs-video" ></i> VIDEOS</a></li>
-                     <li><a href="#course-sec"><i class="bx bxs-pencil" ></i> QUIZES</a></li>
+                     <li><a href="#quizze-sec"><i class="bx bxs-pencil" ></i> QUIZES</a></li>
                      <li><a href="#contact-sec"><i class="bx bxs-contact" ></i> CONTACT</a></li>
                 </ul>
             </div>
@@ -129,10 +129,7 @@
     <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
         <h1 data-scroll-reveal="enter from the bottom after 0.2s"  class="header-line">LISTE DES COURS</h1>
         <p data-scroll-reveal="enter from the bottom after 0.3s" >
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-            Aenean commodo.
-             Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-            Aenean commodo.
+          dans cette section vous pouvez trouver des support de cours sur tout ce qui concernt l'informatique (réseau informatique, programmation, architecture, base de données, ...)
         </p>
     </div>
 
@@ -142,7 +139,7 @@
   <div class="row" >
     {% for cour in cours %}
       <div class="card col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.4s" style="margin-bottom: 20px; ">
-          <div class="about-div" style="background: rgba(200,200,200,0.5); min-height: 400px;">
+          <div class="about-div" style="background: rgba(200,200,200,0.5); min-height: 400px; border-radius: 10px;">
               <img src="{{ cour.image.url }}" class="card-img-top" alt="card3" width="100%" style="max-height: 120px;">
               <h3 >{{ cour.titreCours | upper }}</h3>
               <hr/>
@@ -150,7 +147,7 @@
               <p>
               {{ cour.description | truncatechars:30 }} 
               </p>
-              <a href="{% url 'afficherCours' cour.id %}" class="btn btn-info btn-set"  >DÉTAILS</a>
+              <a href="{% url 'afficherCours' cour.id %}" class="btn btn-info btn-set con rounded-pill"  >DÉTAILS</a>
           </div>
       </div>
     {% endfor %}           
@@ -180,6 +177,7 @@
     <div class="row " >
     {% for vid in video %}
       <div class="card col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.4s" style="margin-bottom: 20px;">
+        <div style="background: white; min-height: 400px; border-radius: 10px; padding: 15px;">
         <video controls style="width: 100%;">
           <source src="{{ vid.videoFile.url}}">
           Your browser does not support the video tag.
@@ -192,6 +190,7 @@
         </p>
         <span class='mt-auto'><a href="{% url 'afficherVideo' vid.id %}" class="btn btn-primary con rounded-pill">afficher</a></span>
       </div>
+    </div>
     {% endfor %}   
     </div>
     <div class="row" align="center" style="margin: 40px;">
@@ -202,7 +201,7 @@
 
 <!--------------------------    END VIDEOS    ---------------------------------->
 
-<div id="features-sec" class="container set-pad" >
+<div id="quizze-sec" class="container set-pad" >
 
   <div class="row text-center">
     <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
@@ -218,14 +217,14 @@
   <div class="row" >
     {% for quiz in quizze %}
     <div class="col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.4s">
-      <div class="about-div">
+      <div class="about-div" style="background: rgba(200,200,200,0.5); min-height: 400px; border-radius: 10px;">
         <img src="{{ quiz.image.url }}" class="card-img-top" alt="card3" width="100%" style="max-height: 120px;">
         <h3 >{{ quiz.titre | upper }}</h3>
         <hr />
         <p >
           {{ quiz.description | truncatechars:30 }}
         </p>
-        <a href="{% url 'afficherQuizze' quiz.id %}" class="btn btn-info btn-set"  >ACCÉDER</a>
+        <a href="{% url 'afficherQuizze' quiz.id %}" class="btn btn-info btn-set  con rounded-pill"  >ACCÉDER</a>
       </div>
     </div>
     {% endfor %}
@@ -260,7 +259,7 @@
                             <div class="panel-heading" >
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse1" class="collapsed">
-                                  <strong>   350+</strong> COURS 
+                                  <strong>   {{nbrCours}}+</strong> COURS 
                                     </a>
                                 </h4>
                             </div>
@@ -274,7 +273,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse2" class="collapsed">
-                                      <strong>   250+</strong> CAPSULES VIDEOS 
+                                      <strong>   {{nbrVideo}}+</strong> CAPSULES VIDEOS 
                                     </a>
                                 </h4>
                             </div>
@@ -290,7 +289,7 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse3" class="collapsed">
-                                        <strong>   153+</strong> QUIZZES 
+                                        <strong>   {{nbrQuizze}}+</strong> QUIZZES 
                                     </a>
                                 </h4>
                             </div>
@@ -334,28 +333,25 @@
            
                
                  <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
-                    <form>
+                    <form action="{% url 'contact' %}" method="post" enctype="multipart/form-data">
+                     {% csrf_token %}
                         <div class="form-group">
-                            <input type="text" class="form-control "  required="required" placeholder="Your Name" />
+                            <input type="text" class="form-control " name="name" required="required" placeholder="Votre Nom" />
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control " required="required"  placeholder="Your Email" />
+                            <input type="text" name="email" class="form-control " required="required"  placeholder="Votre Email" />
                         </div>
                         <div class="form-group">
                             <textarea name="message" required="required" class="form-control" style="min-height: 150px;" placeholder="Message"></textarea>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-info btn-block btn-lg">ENVOYER LA DEMANDE</button>
+                            <button type="submit" class="btn btn-info btn-block btn-lg" name="demende">ENVOYER LA DEMANDE</button>
                         </div>
-
+                        <div class="form-group">
+                            <input type="hidden" name="page" value="{{request.path}}">
+                        </div>
                     </form>
                 </div>
-
-                   
-     
-              
-              
-                
                </div>
                 </div>
           </div> 

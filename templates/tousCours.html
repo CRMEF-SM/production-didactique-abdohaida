@@ -32,10 +32,10 @@
             </div>
             <div class="navbar-collapse collapse move-me">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#home"><i class="bx bxs-home" ></i> ACCUEIL</a></li>
-                     <li><a href="#features-sec"><i class="bx bxs-book" ></i> COURS</a></li>
-                    <li><a href="#faculty-sec"><i class="bx bxs-video" ></i> VIDEOS</a></li>
-                     <li><a href="#course-sec"><i class="bx bxs-pencil" ></i> QUIZES</a></li>
+                    <li><a href="{% url 'home' %}"><i class="bx bxs-home" ></i> ACCUEIL</a></li>
+                     <li><a href="{% url 'tousCours' %}"><i class="bx bxs-book" ></i> COURS</a></li>
+                    <li><a href="{% url 'tousVideo' %}"><i class="bx bxs-video" ></i> VIDEOS</a></li>
+                     <li><a href="{% url 'tousQuizze' %}"><i class="bx bxs-pencil" ></i> QUIZES</a></li>
                      <li><a href="#contact-sec"><i class="bx bxs-contact" ></i> CONTACT</a></li>
                 </ul>
             </div>
@@ -74,17 +74,14 @@
                 </div>
              </div>
         </div>
-<div id="contact-sec"   >
-<div class="overlay">
+ <div id="contact-sec"   >
+           <div class="overlay">
  <div class="container set-pad">
       <div class="row text-center">
                  <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
-                     <h1 data-scroll-reveal="enter from the bottom after 0.1s" class="header-line" >CONTACT US  </h1>
+                     <h1 data-scroll-reveal="enter from the bottom after 0.1s" class="header-line" >NOUS CONTACTER  </h1>
                      <p data-scroll-reveal="enter from the bottom after 0.3s">
-                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                        Aenean commodo.
-                         Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                        Aenean commodo.
+                      Si vous avez des questions, des commentaires, des critiques ou des suggestions, n'hésitez pas à nous contacter.
                          </p>
                  </div>
 
@@ -94,20 +91,23 @@
            
                
                  <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
-                    <form>
+                    <form action="{% url 'contact' %}" method="post" enctype="multipart/form-data">
+                     {% csrf_token %}
                         <div class="form-group">
-                            <input type="text" class="form-control "  required="required" placeholder="Your Name" />
+                            <input type="text" class="form-control " name="name" required="required" placeholder="Votre Nom" />
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control " required="required"  placeholder="Your Email" />
+                            <input type="text" name="email" class="form-control " required="required"  placeholder="Votre Email" />
                         </div>
                         <div class="form-group">
                             <textarea name="message" required="required" class="form-control" style="min-height: 150px;" placeholder="Message"></textarea>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-info btn-block btn-lg">SUBMIT REQUEST</button>
+                            <button type="submit" class="btn btn-info btn-block btn-lg" name="demende">ENVOYER LA DEMANDE</button>
                         </div>
-
+                        <div class="form-group">
+                            <input type="hidden" name="page" value="{{request.path}}">
+                        </div>
                     </form>
                 </div>
                </div>

@@ -1,19 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
 .menu{
     width: 20%;
     height: 100%;
-    min-height: 250px;
+    min-height: 500px;
+    border-radius: 10px;
     float: left;
-    padding: 5px;
+    /* padding: 5px 5px 5px 5px; */
     margin: 10px 0px 10px 10px;
-    background-color: aqua;
+    background-color: rgb(5, 68, 104);
 }
 .contenu{
     width: 78%;
     height: 100%;
-    min-height: 250px;
+    min-height: 500px;
+    border-radius: 10px;
     padding: 10px;
     float: right;
     margin: 10px 0px 10px 10px;
-    background-color: orange;
+    background-color: #f5f6fa;
     text-align: center;
+}
+
+.logo_name{
+  color: #fff;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.logo-details{
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
+.logo-details i{
+  font-size: 28px;
+  font-weight: 500;
+  color: #fff;
+  min-width: 40px;
+  text-align: center
+}
+.nav-links li i{
+  min-width: 40px;
+  text-align: center;
+  font-size: 18px;
+  color: #fff;
+}
+.nav-links{
+  margin-top: 10px;
+}
+.nav-links li{
+  width: 100%;
+  list-style: none;
+  height: 50px;
+}
+.nav-links li a, .logo-details a{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  transition: all 0.4s ease;
+}
+.nav-links li a.active, .logo-details a.active{
+  background: #081D45;
+  border-radius: 10px;
+}
+.nav-links li a:hover, .logo-details a:hover{
+  background: #081D45;
+  border-radius: 10px;
+}
+
+.nav-links li a .links_name{
+  color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+  white-space: nowrap;
 }

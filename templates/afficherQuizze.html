@@ -33,10 +33,10 @@
             </div>
             <div class="navbar-collapse collapse move-me">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#home"><i class="bx bxs-home" ></i> ACCUEIL</a></li>
-                     <li><a href="#features-sec"><i class="bx bxs-book" ></i> COURS</a></li>
-                    <li><a href="#faculty-sec"><i class="bx bxs-video" ></i> VIDEOS</a></li>
-                     <li><a href="#course-sec"><i class="bx bxs-pencil" ></i> QUIZES</a></li>
+                    <li><a href="{% url 'home' %}"><i class="bx bxs-home" ></i> ACCUEIL</a></li>
+                     <li><a href="{% url 'tousCours' %}"><i class="bx bxs-book" ></i> COURS</a></li>
+                    <li><a href="{% url 'tousVideo' %}"><i class="bx bxs-video" ></i> VIDEOS</a></li>
+                     <li><a href="{% url 'tousQuizze' %}"><i class="bx bxs-pencil" ></i> QUIZES</a></li>
                      <li><a href="#contact-sec"><i class="bx bxs-contact" ></i> CONTACT</a></li>
                 </ul>
             </div>
@@ -44,10 +44,15 @@
         </div>
     </div>
       <!--NAVBAR SECTION END-->
-    <div class="container  set-pad justify-content-center" style="width: 50%;">
-    <div class="row " style="margin: 40px;" align="center">
+    <div class="container  set-pad justify-content-center" style="width: 100%;background-color: #f5f6fa;" align="center">
+    <div class="row justify-content-center" style="margin: 40px; border: 1px solid #081D45; padding: 20px;width: 70%; border-radius: 5px;" align="center" >
         
         <div class="row" style="display: none;" id="content">
+            <div class="col" style="margin: 20px 20px -20px 20px;">
+                <span style="flex: 1; ">Score : <span id="res"></span>/{{nbr_questions}}</span>
+                <span style="float: right;">Question : <span id="numQ"></span>/{{nbr_questions}}</span>
+            </div>
+            <hr size="5px" width="90%" style="color : #f5f6fa;">
             <div class="col alert alert-info" style="margin: 20px;">
                 <label class="form-control " id="quest"></label>
             </div>
@@ -71,8 +76,12 @@
             </div>
         </div>
         <div class="row" id="intro">
-            <div class="col alert alert-info" style="margin: 20px;">
-                <label class="form-control">chi haja</label>
+            <div class="col " style="margin: 20px;">
+                <img src="{{ quizze.image.url}}" width="80%" height="300px">
+            </div>
+            <div class="col " style="margin: 0px 20px;">
+                <h4 style="color: green;"> {{quizze.titre | upper}} </h4>
+                <p>{{quizze.description}}</p>
             </div>
             <div class="col" style="margin: 20px;">
                 <input type="button" class="con rounded-pill btn btn-primary" id="commencer" value="commencer" onclick="debut();">
@@ -85,17 +94,14 @@
         </div>
     </div>
 </div>
-<div id="contact-sec"   >
-<div class="overlay">
+ <div id="contact-sec"   >
+           <div class="overlay">
  <div class="container set-pad">
       <div class="row text-center">
                  <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
-                     <h1 data-scroll-reveal="enter from the bottom after 0.1s" class="header-line" >CONTACT US  </h1>
+                     <h1 data-scroll-reveal="enter from the bottom after 0.1s" class="header-line" >NOUS CONTACTER  </h1>
                      <p data-scroll-reveal="enter from the bottom after 0.3s">
-                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                        Aenean commodo.
-                         Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                        Aenean commodo.
+                      Si vous avez des questions, des commentaires, des critiques ou des suggestions, n'hésitez pas à nous contacter.
                          </p>
                  </div>
 
@@ -105,20 +111,23 @@
            
                
                  <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
-                    <form>
+                    <form action="{% url 'contact' %}" method="post" enctype="multipart/form-data">
+                     {% csrf_token %}
                         <div class="form-group">
-                            <input type="text" class="form-control "  required="required" placeholder="Your Name" />
+                            <input type="text" class="form-control " name="name" required="required" placeholder="Votre Nom" />
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control " required="required"  placeholder="Your Email" />
+                            <input type="text" name="email" class="form-control " required="required"  placeholder="Votre Email" />
                         </div>
                         <div class="form-group">
                             <textarea name="message" required="required" class="form-control" style="min-height: 150px;" placeholder="Message"></textarea>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-info btn-block btn-lg">SUBMIT REQUEST</button>
+                            <button type="submit" class="btn btn-info btn-block btn-lg" name="demende">ENVOYER LA DEMANDE</button>
                         </div>
-
+                        <div class="form-group">
+                            <input type="hidden" name="page" value="{{request.path}}">
+                        </div>
                     </form>
                 </div>
                </div>
@@ -178,6 +187,9 @@
         var score = 0;
         var size = data.length;
         function debut() {
+            document.getElementById("res").innerHTML = score;
+            document.getElementById("numQ").innerHTML = index+1;
+
             document.getElementById("intro").style.display = "none";
             document.getElementById("content").style.display = "block";
             document.getElementById("quest").innerHTML = data[0]["question"];
@@ -215,6 +227,9 @@
 
         function suivant() {
 
+            document.getElementById("res").innerHTML = score;
+            document.getElementById("numQ").innerHTML = index+1;
+
             document.getElementById("choix1").style.backgroundColor = "";
             document.getElementById("choix2").style.backgroundColor = "";
             document.getElementById("choix3").style.backgroundColor = "";
@@ -230,6 +245,7 @@
             document.getElementById("choix2").value = data[index]["choix2"];
             document.getElementById("choix3").value = data[index]["choix3"];
             document.getElementById("choix4").value = data[index]["choix4"];
+
 
             if (index == size - 1)
             {

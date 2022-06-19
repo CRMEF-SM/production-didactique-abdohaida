@@ -1,5 +1,5 @@
 from django.shortcuts import render ,redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django .template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
@@ -11,13 +11,20 @@ import json
 from json import dumps
 #from rest_framework import serializers
 from django.core import serializers
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 def home(request):
 	video = Video.objects.all()[:3]
 	cours = Cours.objects.all()[:3]
 	quizze = Quizze.objects.all()[:3]
+	nbrCours = len(cours)
+	nbrVideo = len(video)
+	nbrQuizze = len(quizze)
 	return render(request,'index.html',locals())
 
+@login_required(login_url='login')
 def ajouterVideo(request):
 	if request.method == 'POST' and 'ajouterVideo' in request.POST:
 		titre = request.POST['titre']
@@ -37,7 +44,7 @@ def tousVideo(request):
 	video = Video.objects.all()
 	return render(request, 'tousVideo.html', locals())
 
-
+@login_required(login_url='login')
 def ajouterQuestion(request):
 	quizzes = Quizze.objects.all()
 	if request.method == 'POST' and 'ajouter' in request.POST:
@@ -57,6 +64,7 @@ def ajouterQuestion(request):
 		idQuizze = request.POST['idQuizze']
 		return render(request, "ajouterQuestion.html", locals())
 
+@login_required(login_url='login')
 def ajouterQuizze(request):
 	if request.method == 'POST' and 'ajouter' in request.POST:
 		titre = request.POST['titre']
@@ -96,6 +104,7 @@ def afficherCours(request, id):
 		parties[chap.titreChapitre]=chap.parties.all()
 	return render(request, 'afficherCours.html', locals())
 
+@login_required(login_url='login')
 def editeCours(request, id):
 	cours = Cours.objects.get(id=id)
 	chapitres = cours.chapitres.all()
@@ -112,6 +121,7 @@ def editeCours(request, id):
 	else:
 		return render(request, 'editeCours.html', locals())
 
+@login_required(login_url='login')
 def editeChapitre(request, idCours, idChapitre):
 	cours = Cours.objects.get(id=idCours)
 	chapitre = Chapitre.objects.get(id=idChapitre)
@@ -123,6 +133,7 @@ def editeChapitre(request, idCours, idChapitre):
 	else:
 		return render(request, 'editeChapitre.html', locals())
 
+@login_required(login_url='login')
 def editePartie(request, idCours, idChapitre, idPartie):
 	cours = Cours.objects.get(id=idCours)
 	chapitre = Chapitre.objects.get(id=idChapitre)
@@ -135,6 +146,7 @@ def editePartie(request, idCours, idChapitre, idPartie):
 	else:
 		return render(request, 'editePartie.html', locals())
 
+@login_required(login_url='login')
 def editeQuizze(request, idQuizze):
 	quizze = Quizze.objects.get(id=idQuizze)
 	questions = quizze.questions.all()
@@ -148,6 +160,7 @@ def editeQuizze(request, idQuizze):
 	else:
 		return render(request, 'editeQuizze.html', locals())
 
+@login_required(login_url='login')
 def editeQuestion(request, idQuizze, idQuestion):
 	quizze = Quizze.objects.get(id=idQuizze)
 	question = Question.objects.get(id=idQuestion)
@@ -163,6 +176,7 @@ def editeQuestion(request, idQuizze, idQuestion):
 	else:
 		return render(request, 'editeQuestion.html', locals())
 
+@login_required(login_url='login')
 def editeVideo(request, idVideo):
 	video =Video.objects.get(id=idVideo)
 	if request.method == 'POST' and 'editeVideo' in request.POST:
@@ -175,16 +189,19 @@ def editeVideo(request, idVideo):
 	else:
 		return render(request, 'editeVideo.html', locals())
 
+@login_required(login_url='login')
 def deleteVideo(request, idVideo):
 	video =Video.objects.get(id=idVideo)
 	video.delete()
 	return redirect('adminVideo')
 
+@login_required(login_url='login')
 def deleteQuestion(request, idQuizze, idQuestion):
 	question = Question.objects.get(id=idQuestion)
 	question.delete()
 	return redirect('editeQuizze', idQuizze)
 
+@login_required(login_url='login')
 def deleteQuizze(request, idQuizze):
 	quizze = Quizze.objects.get(id=idQuizze)
 	questions = quizze.questions.all()
@@ -193,11 +210,13 @@ def deleteQuizze(request, idQuizze):
 	quizze.delete()
 	return redirect('adminQuizze')
 
+@login_required(login_url='login')
 def deletePartie(request, idCours, idChapitre, idPartie):
 	partie = Partie.objects.get(id=idPartie)
 	partie.delete()
 	return redirect('editeChapitre', idCours=idCours, idChapitre=idChapitre)
 
+@login_required(login_url='login')
 def deleteChapitre(request, idCours, idChapitre):
 	chapitre = Chapitre.objects.get(id=idChapitre)
 	parties = chapitre.parties.all()
@@ -206,6 +225,7 @@ def deleteChapitre(request, idCours, idChapitre):
 	chapitre.delete()
 	return redirect('editeCours', idCours)
 
+@login_required(login_url='login')
 def ajouterCours(request):
 	if request.method == 'POST' and 'ajouter' in request.POST:
 		titreCours = request.POST['titreCours']
@@ -218,6 +238,7 @@ def ajouterCours(request):
 	else:
 		return render(request, "ajouterCours.html", locals())
 
+@login_required(login_url='login')
 def ajouterChapitre(request):
 	if request.method == 'POST' and 'ajouter' in request.POST:
 		titreChapitre = request.POST['titreChapitre']
@@ -231,6 +252,7 @@ def ajouterChapitre(request):
 		idCours = request.POST['idCours']
 		return render(request, "ajouterChapitre.html", locals())
 
+@login_required(login_url='login')
 def ajouterPartie(request):
 	if request.method == 'POST' and 'ajouter' in request.POST:
 		titrePartie = request.POST['titrePartie']
@@ -251,6 +273,7 @@ def tousCours(request):
 	cours = Cours.objects.all()
 	return render(request, 'tousCours.html', locals())
 
+@login_required(login_url='login')
 def deleteCours(request, id):
 	cours = Cours.objects.get(id=id)
 	for chap in cours.chapitres.all():
@@ -261,6 +284,7 @@ def deleteCours(request, id):
 	cours = Cours.objects.all()
 	return redirect('adminCours')
 
+@login_required(login_url='login')
 def adminPanel(request):
 	cours = Cours.objects.all()
 	video = Video.objects.all()
@@ -274,14 +298,64 @@ def tousQuizze(request):
 	quizze = Quizze.objects.all()
 	return render(request, 'tousQuizze.html', locals())
 
+@login_required(login_url='login')
 def adminCours(request):
 	cours = Cours.objects.all()
 	return render(request, 'adminCours.html', locals())
 
+@login_required(login_url='login')
 def adminVideo(request):
 	video = Video.objects.all()
 	return render(request, 'adminVideo.html', locals())
 
+@login_required(login_url='login')
 def adminQuizze(request):
 	quizze = Quizze.objects.all()
 	return render(request, 'adminQuizze.html', locals())
+
+
+
+def Login(request):
+	if request.method == 'POST' and 'login' in request.POST:
+		username = request.POST['username']
+		password = request.POST['password']
+		user = authenticate(username=username, password=password)
+		if user is not None and user.is_active:
+			login(request, user)
+			return redirect('adminPanel')
+		else:
+			messages.add_message(request, messages.INFO, 'username ou password erronée')
+			return render(request, 'login.html',locals())
+	else:
+		return render(request, 'login.html',locals())
+
+def Logout(request):
+	logout(request)
+	return render(request, 'login.html',locals())
+
+def register(request):
+	username = request.POST['username']
+	email = request.POST['email']
+	password = request.POST['password']
+	user = User.objects.create_user(username, email, password)
+	user.save()
+	return redirect('login')
+
+def contact(request):
+	name = request.POST['name']
+	email = request.POST['email']
+	body = request.POST['message']
+	page = request.POST.get('page', '/')
+	message = Message.objects.create(name=name, email=email, message=body)
+	message.save()
+	return HttpResponseRedirect(page)
+
+def tousMessage(request):
+	messages = Message.objects.all()
+	return render(request, 'tousMessage.html', locals())
+
+def deleteMessage(request, id):
+	message = Message.objects.get(id=id)
+	message.delete()
+	return redirect('tousMessage')
+

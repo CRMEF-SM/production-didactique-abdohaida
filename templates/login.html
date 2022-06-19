@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>login</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'assets/css/login.css' %}">
+	<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+<div class="container" id="container">
+	<div class="form-container sign-up-container">
+		<form action="{% url 'register' %}" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			<h1>Inscription</h1>
+			<div class="social-container">
+				<a href="#" class="social"><i class="bx bxl-facebook"></i></a>
+				<a href="#" class="social"><i class="bx bxl-google"></i></a>
+				<a href="#" class="social"><i class="bx bxl-linkedin"></i></a>
+			</div>
+			<span>utiliser votre email pour inscrire</span>
+			<input type="text" name="username" placeholder="Username" />
+			<input type="email" name="email" placeholder="Email" />
+			<input type="password" name="password" placeholder="Password" />
+			<input type="submit" name="signUp" value="Sing Up" style="cursor: pointer;" class="in">
+		</form>
+	</div>
+	<div class="form-container sign-in-container">
+		<form action="{% url 'login' %}" method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			{% if messages %}
+  				{% for message in messages %}
+    				<label class="lab">{{ message }}</label>
+  				{% endfor %}
+			{% endif %}
+			<h1>Login</h1>
+			<div class="social-container">
+				<a href="#" class="social"><i class="bx bxl-facebook"></i></a>
+				<a href="#" class="social"><i class="bx bxl-google"></i></a>
+				<a href="#" class="social"><i class="bx bxl-linkedin"></i></a>
+			</div>
+			<span>Vous avez un compte?</span>
+			<input type="text" name="username" placeholder="username" />
+			<input type="password" name="password" placeholder="Password" />
+			<a href="#">mot de passe oublier?</a>
+			<input type="submit" name="login" value="Login" style="cursor: pointer;" class="in">
+		</form>
+	</div>
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Bonjour !</h1>
+				<p>Entrer username et password pour connecter</p>
+				<button class="ghost" id="signIn" style="cursor: pointer;" >Sign In</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+				<h1>Bonjour !</h1>
+				<p>Entrer vos informations personnel pour faire l'inscription</p>
+				<button class="ghost" id="signUp" style="cursor: pointer;" disabled>Sign Up</button>
+				<a href="{% url 'home' %}" class="in">anonyme</a>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="{% static 'assets/js/login.js' %}"></script>
+</body>
+</html>

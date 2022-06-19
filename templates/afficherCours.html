@@ -10,12 +10,12 @@
     <!-- BOOTSTRAP CORE STYLE CSS -->
     <link href="{% static 'assets/css/bootstrap.css' %}" rel="stylesheet" />
     <!-- FONT AWESOME CSS -->
-<link href="{% static 'assets/css/font-awesome.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/css/font-awesome.min.css' %}" rel="stylesheet" />
      <!-- FLEXSLIDER CSS -->
-<link href="{% static 'assets/css/flexslider.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/css/flexslider.css' %}" rel="stylesheet" />
     <!-- CUSTOM STYLE CSS -->
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />    
-    <link href="{% static 'assets/css/sidebar.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/css/sidebar.css'%}?{% now 'U' %}" rel="stylesheet" />
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>    
   <!-- Google	Fonts -->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css' />
@@ -34,10 +34,10 @@
             </div>
             <div class="navbar-collapse collapse move-me">
                 <ul class="nav navbar-nav navbar-right" >
-                    <li><a href="#home"><i class="bx bxs-home" ></i> ACCUEIL</a></li>
-                     <li><a href="#features-sec"><i class="bx bxs-book" ></i> COURS</a></li>
-                    <li><a href="#faculty-sec"><i class="bx bxs-video" ></i> VIDEOS</a></li>
-                     <li><a href="#course-sec"><i class="bx bxs-pencil" ></i> QUIZES</a></li>
+                    <li><a href="{% url 'home' %}"><i class="bx bxs-home" ></i> ACCUEIL</a></li>
+                     <li><a href="{% url 'tousCours' %}"><i class="bx bxs-book" ></i> COURS</a></li>
+                    <li><a href="{% url 'tousVideo' %}"><i class="bx bxs-video" ></i> VIDEOS</a></li>
+                     <li><a href="{% url 'tousQuizze' %}"><i class="bx bxs-pencil" ></i> QUIZES</a></li>
                      <li><a href="#contact-sec"><i class="bx bxs-contact" ></i> CONTACT</a></li>
                 </ul>
             </div>
@@ -47,24 +47,32 @@
       <!--NAVBAR SECTION END-->
 
 <!-- Sidebar -->
-<div class="container" style="margin-top: 65px;">
+<div class="container-fluid" style="margin-top: 65px; ">
  <div class="menu">
-     <h2 align="center"> {{ cours.titreCours }} </h2>
-     <ul>
+     <div class="logo-details" >
+        <a href="#" onclick="show('{{cours.titreCours}}');" id="/{{cours.titreCours}}">
+        <i  ></i>
+        <span class="logo_name">{{ cours.titreCours | upper }}</span></a>
+     </div>
+     <hr style="size: 4px; color: white ; margin: 0px;">
+     <ul class="nav-links">
          {% for chap in chapitres%}
-            <li><a href="#" onclick="show({{chap.id}});"> {{chap.titreChapitre}} </a></li>
+            <li><a href="#" onclick="show('{{chap.id}}');" id="/{{chap.id}}">
+                <i  ></i>
+                <span class="links_name">{{chap.titreChapitre}} </span>
+            </a></li>
          {% endfor %}
      </ul>
  </div>  
- <div class="contenu">
+ <div class="contenu" >
         <section id= '{{ cours.titreCours }}' class="sec">
-            <h1>{{cours.titreCours}}</h1>
+            <h1>{{cours.titreCours | upper}}</h1>
             <img src="{{ cours.image.url }}" width="80%">
             <h5>{{cours.description}}</h5>
         </section>
      {% for chap in chapitres %}
         <section id= '{{chap.id}}' class="sec">
-            <h1>{{chap.titreChapitre}}</h1>
+            <h1>{{chap.titreChapitre | upper}}</h1>
             {% for cle, val in parties.items %}
                 {% if cle == chap.titreChapitre %}
                     {% for part in val %}
@@ -80,17 +88,14 @@
       
 
 
-<div id="contact-sec"   >
-<div class="overlay">
+ <div id="contact-sec"   >
+           <div class="overlay">
  <div class="container set-pad">
       <div class="row text-center">
                  <div class="col-lg-8 col-lg-offset-2 col-md-8 col-sm-8 col-md-offset-2 col-sm-offset-2">
-                     <h1 data-scroll-reveal="enter from the bottom after 0.1s" class="header-line" >CONTACT US  </h1>
+                     <h1 data-scroll-reveal="enter from the bottom after 0.1s" class="header-line" >NOUS CONTACTER  </h1>
                      <p data-scroll-reveal="enter from the bottom after 0.3s">
-                      Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                        Aenean commodo.
-                         Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                        Aenean commodo.
+                      Si vous avez des questions, des commentaires, des critiques ou des suggestions, n'hésitez pas à nous contacter.
                          </p>
                  </div>
 
@@ -100,20 +105,23 @@
            
                
                  <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
-                    <form>
+                    <form action="{% url 'contact' %}" method="post" enctype="multipart/form-data">
+                     {% csrf_token %}
                         <div class="form-group">
-                            <input type="text" class="form-control "  required="required" placeholder="Your Name" />
+                            <input type="text" class="form-control " name="name" required="required" placeholder="Votre Nom" />
                         </div>
                         <div class="form-group">
-                            <input type="text" class="form-control " required="required"  placeholder="Your Email" />
+                            <input type="text" name="email" class="form-control " required="required"  placeholder="Votre Email" />
                         </div>
                         <div class="form-group">
                             <textarea name="message" required="required" class="form-control" style="min-height: 150px;" placeholder="Message"></textarea>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-info btn-block btn-lg">SUBMIT REQUEST</button>
+                            <button type="submit" class="btn btn-info btn-block btn-lg" name="demende">ENVOYER LA DEMANDE</button>
                         </div>
-
+                        <div class="form-group">
+                            <input type="hidden" name="page" value="{{request.path}}">
+                        </div>
                     </form>
                 </div>
                </div>
@@ -168,7 +176,22 @@
     <!--  Custom Scripts --> 
          <script src="{% static 'assets/js/custom.js' %}"></script>
     <script type="text/javascript">
+        function size() {
+            var heightMenu = document.getElementsByClassName('menu')[0].clientHeight;
+            var heightContenu = document.getElementsByClassName('contenu')[0].clientHeight;
+            if(heightContenu>heightMenu)
+                document.getElementsByClassName('menu')[0].style.height=heightContenu+"px";
+            else
+                document.getElementsByClassName('contenu')[0].style.height
+            =heightMenu+"px";
+        }
+
         function show(idSection) {
+            var links = document.links;
+            for (i=0;i<links.length;i++)
+                links[i].classList.remove('active');
+            document.getElementById("/"+idSection).classList.add('active');
+
             var sections = document.getElementsByClassName('sec');
             var i;
             for (i=0;i<sections.length;i++)

@@ -269,3 +269,7 @@ h1::after {
     color:#fff;
     font-size:15px;
 }
+
+.con {
+    border-radius: 5px;
+}

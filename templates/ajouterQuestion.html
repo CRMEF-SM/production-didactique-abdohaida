@@ -46,8 +46,14 @@
             <span class="links_name">Quizze</span>
           </a>
         </li>
+        <li>
+          <a href="{% url 'tousMessage' %}">
+            <i class='bx bx-message' ></i>
+            <span class="links_name">Message</span>
+          </a>
+        </li>
         <li class="log_out">
-          <a href="#">
+          <a href="{% url 'logout' %}">
             <i class='bx bx-log-out'></i>
             <span class="links_name">Log out</span>
           </a>
@@ -72,6 +78,7 @@
     </nav>
 
     <div class="home-content container" style="width: 70%;">
+      <h4 class="alert alert-success" style="text-align: center;">Ajouter Question</h4>
     	<form class="md-form var" action="{% url 'ajouterQuestion' %}" method="post" enctype="multipart/form-data">
 		{% csrf_token %}
 		<div class="form-group">
