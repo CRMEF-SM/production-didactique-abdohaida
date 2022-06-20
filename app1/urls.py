@@ -40,7 +40,7 @@ url(r'^deleteChapitre/(?P<idCours>\d+)/(?P<idChapitre>\d+)$', views.deleteChapit
 url(r'^adminCours$', views.adminCours, name='adminCours'),
 url(r'^adminQuizze$', views.adminQuizze, name='adminQuizze'),
 url(r'^adminVideo$', views.adminVideo, name='adminVideo'),
-
+url(r'^repondreMessage/(?P<idMessage>\d+)$', views.repondreMessage, name='repondreMessage'),
 
 
 

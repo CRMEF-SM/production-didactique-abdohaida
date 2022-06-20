@@ -2,7 +2,7 @@
 {% load static %}
 <html>
 <head>
-  <title>Admin</title>
+  <title>repondre Message</title>
   <link href="{% static 'assets/css/bootstrap.css' %}" rel="stylesheet" />
     <!-- FONT AWESOME CSS -->
   <link href="{% static 'assets/css/font-awesome.min.css' %}" rel="stylesheet" />
@@ -29,7 +29,7 @@
           </a>
         </li>
         <li>
-          <a href="{% url 'adminCours' %}">
+          <a href="{% url 'adminCours' %}" >
             <i class='bx bx-book-alt' ></i>
             <span class="links_name">Cours</span>
           </a>
@@ -77,31 +77,31 @@
       </div>
     </nav>
 
-    <div class="home-content container" style="width: 85%;">
-      <h4 class="alert alert-info">Tous les massages</h4>
-      
-      <div id="tab">
-    	<table width="95%" style="border-collapse: separate; border-spacing: 2px;">
-       <tr style="padding-bottom: 5px; border-bottom: solid 2px ;">
-         <th>Nom</th>
-         <th>email</th>
-         <th>Message</th>
-         <th>repondre</th>
-         <th>delete</th>
-       </tr> 
-       {% for msg in messages %}
-       <tr>
-         <td>{{msg.name}}</td>
-         <td>{{msg.email}}</td>
-         <td>{{msg.message | truncatechars:30 }}</td>
-         <td><a href="{% url 'repondreMessage' msg.id %}" class="btn btn-success btn-set"  >repondre</a></td>
-         <td><a href="{% url 'deleteMessage' msg.id %}" class="btn btn-danger btn-set"  >delete</a></td>
-       </tr>
-       {% endfor %}
-       
-      </table>
-    </div>
-  </div>
+    <div class="home-content container" style="width: 70%;">
+      <h4 class="alert alert-success" style="text-align: center;">{{message.name}}</h4>
+    	<form class="md-form var" action="{% url 'repondreMessage' message.id %}" method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+    {% if messages %}
+          {% for message in messages %}
+            <label class="alert alert-warning" style="text-align: center;">{{ message }}</label>
+          {% endfor %}
+      {% endif %}
+		    <div class="form-group">
+        	<label for="subject">subject</label>
+        	<input type="text" name="subject" class="form-control" required />
+        </div>
+        <div class="form-group">
+          <label for="to">destination</label>
+          <input type="text" name="to" class="form-control"  value="{{message.email}}" readonly required />
+        </div>
+        <div class="form-group">
+        	<label for="content">message</label>
+        	<textarea   id="content" rows="12" name="msg" placeholder="message" class="form-control" required></textarea>
+        </div>
+        <div class="form-group">
+        	<input type="submit" name="repondre" class="btn btn-info">
+        </div>
+	</form>
   </section>
 
 <script>
@@ -115,19 +115,6 @@
       }
       else
       sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
-      }
-
-    function show() {
-        if(document.getElementById('fr').style.display=="none")
-        {
-          document.getElementById('fr').style.display = 'block';
-          document.getElementById('tab').style.display = 'none';
-        }
-        else
-        {
-          document.getElementById('fr').style.display = 'none';
-          document.getElementById('tab').style.display = 'block';
-        }
       }
  </script>
 

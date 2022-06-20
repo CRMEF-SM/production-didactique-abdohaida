@@ -4,6 +4,7 @@ from django .template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.core.mail import send_mail
+from mailer import Mailer
 from .models import *
 import socket
 import requests
@@ -350,12 +351,32 @@ def contact(request):
 	message.save()
 	return HttpResponseRedirect(page)
 
+@login_required(login_url='login')
 def tousMessage(request):
 	messages = Message.objects.all()
 	return render(request, 'tousMessage.html', locals())
 
+@login_required(login_url='login')
 def deleteMessage(request, id):
 	message = Message.objects.get(id=id)
 	message.delete()
 	return redirect('tousMessage')
 
+@login_required(login_url='login')
+def repondreMessage(request, idMessage):
+	message = Message.objects.get(id=idMessage)
+	if request.method == 'POST' and 'repondre' in request.POST:
+		subject = request.POST['subject']
+		msg = request.POST['msg']
+		source = 'production.diadactique@gmail.com'
+		destination = request.POST['to']
+		#socket.getaddrinfo('smtp.gmail.com',587)
+		mail=Mailer(email=source,password='ijtmsmnbovezumhy')
+		mail.send(receiver=destination,subject=subject,message=msg)
+		if mail.status:
+			messages.add_message(request, messages.INFO, 'message envoyer')
+		else:
+			messages.add_message(request, messages.INFO, 'erreur')
+		return render(request,'repondreMessage.html',locals())
+	else:
+		return render(request,'repondreMessage.html',locals())
