@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  <title>ajouter Fichier</title>
+  <link href="{% static 'assets/css/bootstrap.css' %}" rel="stylesheet" />
+    <!-- FONT AWESOME CSS -->
+  <link href="{% static 'assets/css/font-awesome.min.css' %}" rel="stylesheet" />
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/css/admin.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'assets/fontawesome/css/all.css' %}">
+  <script type="text/javascript" src="{% static 'assets/js/admin.js' %}"></script>
+  <meta charset="UTF-8">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<!---------------------------- sideBar ----------------------------------->
+  <div class="sidebar">
+    <div class="logo-details">
+      <i class='bx bxs-home'></i>
+      <span class="logo_name">CRMEF</span>
+    </div>
+      <ul class="nav-links">
+        <li>
+          <a href="{% url 'adminPanel' %}" >
+            <i class='bx bx-grid-alt' ></i>
+            <span class="links_name">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'adminCours' %}" class="active">
+            <i class='bx bx-book-alt' ></i>
+            <span class="links_name">Cours</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'adminVideo' %}">
+            <i class='bx bxs-video' ></i>
+            <span class="links_name">Video</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'adminQuizze' %}">
+            <i class='bx bx-pencil' ></i>
+            <span class="links_name">Quizze</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'tousMessage' %}">
+            <i class='bx bx-message' ></i>
+            <span class="links_name">Message</span>
+          </a>
+        </li>
+        <li class="log_out">
+          <a href="{% url 'logout' %}">
+            <i class='bx bx-log-out'></i>
+            <span class="links_name">Log out</span>
+          </a>
+        </li>
+      </ul>
+  </div>
+
+<!---------------------------- END sideBar ----------------------------------->
+
+<!---------------------------- Home ------------------------------------------>
+
+  <section class="home-section">
+    <nav>
+      <div class="sidebar-button">
+        <i class='bx bx-menu sidebarBtn'></i>
+        <span class="dashboard">Dashboard</span>
+      </div>
+      <div class="search-box">
+        <input type="text" placeholder="Search...">
+        <i class='bx bx-search' ></i>
+      </div>
+    </nav>
+
+    <div class="home-content container" style="width: 70%;">
+      <h4 class="alert alert-success" style="text-align: center;">Ajouter Fichier</h4>
+    	<form class="md-form var" action="{% url 'ajouterFichier' %}" method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		<div class="form-group">
+        	<label for="titre">titre du Fichier</label>
+        	<input type="text" name="titre" class="form-control" required />
+        </div>
+        <div class="form-group">
+        	<label for="url">lien</label>
+        	<input type="file" name="url" id="url" required>
+        </div>
+        <input type="hidden" name="idChapitre" value="{{idChapitre}}"/>
+        <input type="hidden" name="idCours" value="{{idCours}}"/>
+        <div class="form-group">
+        	<input type="submit" name="ajouter" class="btn btn-info">
+        </div>
+	</form>
+  </section>
+
+<script>
+    let sidebar = document.querySelector(".sidebar");
+    let sidebarBtn = document.querySelector(".sidebarBtn");
+    sidebarBtn.onclick = function() {
+      sidebar.classList.toggle("active");
+      if(sidebar.classList.contains("active"))
+      {
+         sidebarBtn.classList.replace("bx-menu" ,"bx-menu-alt-right");
+      }
+      else
+      sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+      }
+ </script>
+
+</body>
+</html>

@@ -86,15 +86,15 @@
         <div class="box" style="margin: 5px;">
             <div class="right-side" style="min-width: 90%;">
             <img src="{{ cour.image.url }}" class="card-img-top" alt="card3" width="100%" style="max-height: 120px;">
-            <h3 >{{ cour.titreCours | upper }}</h3>
+            <h3 >{{ cour.titreCours | truncatewords:1 |upper }}</h3>
             <p>
-              {{ cour.description | truncatechars:30 }} 
+              {{ cour.description | truncatechars:30 }}
             </p>
             <a href="{% url 'deleteCours' cour.id %}" class="btn btn-danger btn-set"  >delete</a>
             <a href="{% url 'editeCours' cour.id %}" class="btn btn-primary btn-set"  >edite</a>
           </div>
         </div>
-      {% endfor %}           
+      {% endfor %}
       </div>
   </section>
 

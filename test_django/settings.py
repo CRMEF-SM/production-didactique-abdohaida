@@ -23,10 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-(rf0b@*1#1m+osgz6^((22_5k+6klol0zq$39w_$bd465g_h&%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+X_FRAME_OPTIONS = 'ALLOW-FROM https://abdohaida.pythonanywhere.com/'
 
 # Application definition
 
@@ -78,11 +79,10 @@ WSGI_APPLICATION = 'test_django.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'production',
-        'USER': 'root',
-        'PASSWORD':'',
-        'HOST':'localhost',
-        'PORT':'3306',
+        'NAME': 'abdohaida$production',
+        'USER': 'abdohaida',
+        'PASSWORD':'abdo032001',
+        'HOST':'abdohaida.mysql.pythonanywhere-services.com',
     }
 
     #'default': {

@@ -8,12 +8,12 @@
 
 .menu{
     width: 20%;
-    height: 100%;
+    /* height: 100%; */
     min-height: 500px;
     border-radius: 10px;
     float: left;
     /* padding: 5px 5px 5px 5px; */
-    margin: 10px 0px 10px 10px;
+    margin: 10px 0px ;
     background-color: rgb(5, 68, 104);
 }
 .contenu{
@@ -23,7 +23,7 @@
     border-radius: 10px;
     padding: 10px;
     float: right;
-    margin: 10px 0px 10px 10px;
+    margin: 10px 0px ;
     background-color: #f5f6fa;
     text-align: center;
 }
@@ -40,7 +40,7 @@
   align-items: center;
 }
 .logo-details i{
-  font-size: 28px;
+  font-size: 35px;
   font-weight: 500;
   color: #fff;
   min-width: 40px;
@@ -82,4 +82,19 @@
   font-size: 15px;
   font-weight: 400;
   white-space: nowrap;
+}
+
+@media (max-width: 400px){
+    .links_name{
+        display:none;
+    }
+    .menu {
+       width:auto;
+    }
+    .nav-links {
+        text-align:center;
+    }
+    .logo_name {
+        display:none;
+    }
 }

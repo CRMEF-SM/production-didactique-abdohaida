@@ -4,6 +4,7 @@ from django .template import RequestContext
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.core.mail import send_mail
+from django.views.decorators.clickjacking import xframe_options_exempt
 from mailer import Mailer
 from .models import *
 import socket
@@ -20,9 +21,10 @@ def home(request):
 	video = Video.objects.all()[:3]
 	cours = Cours.objects.all()[:3]
 	quizze = Quizze.objects.all()[:3]
-	nbrCours = len(cours)
-	nbrVideo = len(video)
-	nbrQuizze = len(quizze)
+	nbrCours = len(Cours.objects.all())
+	nbrVideo = len(Video.objects.all())
+	nbrQuizze = len(Quizze.objects.all())
+	nbrMessage = len(Message.objects.all())
 	return render(request,'index.html',locals())
 
 @login_required(login_url='login')
@@ -77,7 +79,7 @@ def ajouterQuizze(request):
 	else:
 		return render(request, "ajouterQuizze.html", locals())
 
-
+@xframe_options_exempt
 def afficherQuizze(request, id):
 	quizze = Quizze.objects.get(id=id)
 	questions = quizze.questions.all()
@@ -97,12 +99,22 @@ def afficherQuizze(request, id):
 	nbr_questions = len(data)
 	return render(request, 'afficherQuizze.html', locals())
 
+@xframe_options_exempt
 def afficherCours(request, id):
 	cours = Cours.objects.get(id=id)
 	chapitres = cours.chapitres.all()
 	parties = {}
 	for chap in chapitres:
 		parties[chap.titreChapitre]=chap.parties.all()
+	videos = {}
+	for chap in chapitres:
+		videos[chap.titreChapitre]=chap.videos.all()
+	files = {}
+	for chap in chapitres:
+		files[chap.titreChapitre]=chap.files.all()
+	quizzes = {}
+	for chap in chapitres:
+		quizzes[chap.titreChapitre]=chap.quizzes.all()
 	return render(request, 'afficherCours.html', locals())
 
 @login_required(login_url='login')
@@ -110,13 +122,19 @@ def editeCours(request, id):
 	cours = Cours.objects.get(id=id)
 	chapitres = cours.chapitres.all()
 	parties = {}
+	files = {}
+	videos = {}
+	quizzes = {}
 	for chap in chapitres:
 		parties[chap.titreChapitre]=len(chap.parties.all())
+		files[chap.titreChapitre]=len(chap.files.all())
+		videos[chap.titreChapitre]=len(chap.videos.all())
+		quizzes[chap.titreChapitre]=len(chap.quizzes.all())
 	if request.method == 'POST' and 'editeCours' in request.POST:
 		cours.titreCours = request.POST['titreCours']
 		cours.description = request.POST['description']
 		if 'image' in request.FILES:
-			image = request.FILES['image']
+			cours.image = request.FILES['image']
 		cours.save()
 		return redirect('editeCours', id)
 	else:
@@ -127,6 +145,9 @@ def editeChapitre(request, idCours, idChapitre):
 	cours = Cours.objects.get(id=idCours)
 	chapitre = Chapitre.objects.get(id=idChapitre)
 	parties = chapitre.parties.all()
+	files = chapitre.files.all()
+	videos = chapitre.videos.all()
+	quizzes = chapitre.quizzes.all()
 	if request.method == 'POST' and 'editeChapitre' in request.POST:
 		chapitre.titreChapitre = request.POST['titreChapitre']
 		chapitre.save()
@@ -186,6 +207,7 @@ def editeVideo(request, idVideo):
 		if 'video' in request.FILES:
 			video.videoFile = request.FILES['video']
 		video.save()
+		#page = request.META.get('HTTP_REFERER')
 		return redirect('adminVideo')
 	else:
 		return render(request, 'editeVideo.html', locals())
@@ -221,8 +243,17 @@ def deletePartie(request, idCours, idChapitre, idPartie):
 def deleteChapitre(request, idCours, idChapitre):
 	chapitre = Chapitre.objects.get(id=idChapitre)
 	parties = chapitre.parties.all()
+	videos = chapitre.videos.all()
+	files = chapitre.files.all()
+	quizzes = chapitre.quizzes.all()
 	for part in parties:
 		part.delete()
+	for vid in videos:
+		vid.delete()
+	for file in files:
+		file.delete()
+	for quiz in quizzes:
+		quiz.delete()
 	chapitre.delete()
 	return redirect('editeCours', idCours)
 
@@ -290,6 +321,7 @@ def adminPanel(request):
 	cours = Cours.objects.all()
 	video = Video.objects.all()
 	quizze = Quizze.objects.all()
+	nbrMessage = Message.objects.all().count()
 	nbrCours = len(cours)
 	nbrVideo = len(video)
 	nbrQuizze = len(quizze)
@@ -313,8 +345,6 @@ def adminVideo(request):
 def adminQuizze(request):
 	quizze = Quizze.objects.all()
 	return render(request, 'adminQuizze.html', locals())
-
-
 
 def Login(request):
 	if request.method == 'POST' and 'login' in request.POST:
@@ -380,3 +410,83 @@ def repondreMessage(request, idMessage):
 		return render(request,'repondreMessage.html',locals())
 	else:
 		return render(request,'repondreMessage.html',locals())
+
+@login_required(login_url='login')
+def ajouterVideoToChapitre(request):
+	if request.method == 'POST' and 'ajouterVideo' in request.POST:
+		titre = request.POST['titre']
+		description = request.POST['description']
+		videoFile = request.FILES['video']
+		idChapitre = request.POST['idChapitre']
+		idCours = request.POST['idCours']
+		video = Video.objects.create(titre=titre, description=description,videoFile=videoFile)
+		video.save()
+		chapitre = Chapitre.objects.get(id=idChapitre)
+		chapitre.videos.add(video)
+		return redirect('editeChapitre', idCours, idChapitre)
+	else:
+		idCours = request.POST['idCours']
+		idChapitre = request.POST['idChapitre']
+		return render(request, "ajouterVideoToChapitre.html", locals())
+
+
+@login_required(login_url='login')
+def ajouterFichier(request):
+	if request.method == 'POST' and 'ajouter' in request.POST:
+		titre = request.POST['titre']
+		lien = request.FILES['url']
+		idChapitre = request.POST['idChapitre']
+		idCours = request.POST['idCours']
+		fichier = File.objects.create(titre=titre, lien=lien)
+		fichier.save()
+		chapitre = Chapitre.objects.get(id=idChapitre)
+		chapitre.files.add(fichier)
+		return redirect('editeChapitre', idCours=idCours, idChapitre=idChapitre)
+	else:
+		idCours = request.POST['idCours']
+		idChapitre = request.POST['idChapitre']
+		return render(request, "ajouterFichier.html", locals())
+
+@login_required(login_url='login')
+def ajouterQuizzeToChapitre(request):
+	if request.method == 'POST' and 'ajouter' in request.POST:
+		titre = request.POST['titre']
+		description = request.POST['description']
+		image = request.FILES['image']
+		idChapitre = request.POST['idChapitre']
+		idCours = request.POST['idCours']
+		quizze = Quizze.objects.create(titre=titre, description=description, image=image)
+		quizze.save()
+		chapitre = Chapitre.objects.get(id=idChapitre)
+		chapitre.quizzes.add(quizze)
+		return redirect('editeChapitre', idCours=idCours, idChapitre=idChapitre)
+	else:
+		idCours = request.POST['idCours']
+		idChapitre = request.POST['idChapitre']
+		return render(request, "ajouterQuizzeToChapitre.html", locals())
+
+
+def quizze(request, id):
+	quizze = Quizze.objects.get(id=id)
+	questions = quizze.questions.all()
+	#data = serializers.serialize('json', quest)
+	data = []
+	for quest in questions:
+		val = {
+		'question' : quest.question,
+		'choix1' : quest.choix1,
+		'choix2' : quest.choix2,
+		'choix3' : quest.choix3,
+		'choix4' : quest.choix4,
+		'reponse' : quest.reponse}
+		data.append(val)
+
+	questions = dumps(data)
+	nbr_questions = len(data)
+	return render(request, 'quizze.html', locals())
+
+@login_required(login_url='login')
+def deleteFile(request, idCours, idChapitre, idFile):
+	file = File.objects.get(id=idFile)
+	file.delete()
+	return redirect('editeChapitre', idCours=idCours, idChapitre=idChapitre)

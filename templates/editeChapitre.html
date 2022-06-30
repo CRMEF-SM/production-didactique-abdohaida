@@ -71,16 +71,36 @@
         <i class='bx bx-menu sidebarBtn'></i>
         <span class="dashboard">Dashboard</span>
       </div>
-      <div class="search-box">
-        <input type="text" placeholder="Search...">
-        <i class='bx bx-search' ></i>
-      </div>
       <div >
         <form class="md-form var" action="{% url 'ajouterPartie' %}" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <input type="hidden" name="idChapitre" value="{{chapitre.id}}">
           <input type="hidden" name="idCours" value="{{cours.id}}">
           <input type="submit" name="ajouterPartie" class="btn btn-success" value="ajouter partie">
+        </form>
+      </div>
+      <div >
+        <form class="md-form var" action="{% url 'ajouterVideoToChapitre' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <input type="hidden" name="idChapitre" value="{{chapitre.id}}">
+          <input type="hidden" name="idCours" value="{{cours.id}}">
+          <input type="submit" name="ajouterPartie" class="btn btn-success" value="ajouter video">
+        </form>
+      </div>
+      <div >
+        <form class="md-form var" action="{% url 'ajouterQuizzeToChapitre' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <input type="hidden" name="idChapitre" value="{{chapitre.id}}">
+          <input type="hidden" name="idCours" value="{{cours.id}}">
+          <input type="submit" name="ajouterPartie" class="btn btn-success" value="ajouter quizze">
+        </form>
+      </div>
+      <div >
+        <form class="md-form var" action="{% url 'ajouterFichier' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <input type="hidden" name="idChapitre" value="{{chapitre.id}}">
+          <input type="hidden" name="idCours" value="{{cours.id}}">
+          <input type="submit" name="ajouterPartie" class="btn btn-success" value="ajouter fichier">
         </form>
       </div>
     </nav>
@@ -102,20 +122,43 @@
       <div id="tab">
     	<table width="95%" style="border-collapse: separate; border-spacing: 2px;">
        <tr style="padding-bottom: 5px; border-bottom: solid 2px ;">
-         <th>nom partie</th>
-         <th>content</th>
+         <th>titre</th>
+         <th>type</th>
          <th>edite</th>
          <th>delete</th>
-       </tr> 
+       </tr>
        {% for part in parties %}
        <tr>
          <td>{{part.titrePartie}}</td>
-         <td>{{part.content | truncatechars:30 }}</td>
+         <td>Partie</td>
          <td><a href="{% url 'editePartie' idCours=cours.id idChapitre=chapitre.id idPartie=part.id %}" class="btn btn-primary btn-set"  >edite</a></td>
          <td><a href="{% url 'deletePartie' idCours=cours.id idChapitre=chapitre.id idPartie=part.id %}" class="btn btn-danger btn-set"  >delete</a></td>
        </tr>
        {% endfor %}
-       
+       {% for file in files %}
+       <tr>
+         <td>{{file.titre}}</td>
+         <td>File</td>
+         <td><a href="#" class="btn btn-primary btn-set"  >edite</a></td>
+         <td><a href="{% url 'deleteFile' idCours=cours.id idChapitre=chapitre.id idFile=file.id %}" class="btn btn-danger btn-set"  >delete</a></td>
+       </tr>
+       {% endfor %}
+       {% for video in videos %}
+       <tr>
+         <td>{{video.titre}}</td>
+         <td>Video</td>
+         <td><a href="{% url 'editeVideo' video.id  %}" class="btn btn-primary btn-set"  >edite</a></td>
+         <td><a href="{% url 'deleteVideo' video.id %}" class="btn btn-danger btn-set"  >delete</a></td>
+       </tr>
+       {% endfor %}
+       {% for quiz in quizzes %}
+       <tr>
+         <td>{{quiz.titre}}</td>
+         <td>Quizze</td>
+         <td><a href="{% url 'editeQuizze' quiz.id  %}" class="btn btn-primary btn-set"  >edite</a></td>
+         <td><a href="{% url 'deleteQuizze' quiz.id %}" class="btn btn-danger btn-set"  >delete</a></td>
+       </tr>
+       {% endfor %}
       </table>
     </div>
   </div>

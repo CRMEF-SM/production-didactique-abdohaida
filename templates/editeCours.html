@@ -91,7 +91,7 @@
         {% csrf_token %}
           <div class="form-group">
             <label for="titreCours">titre du cours</label>
-            <input type="text" name="titreCours" class="form-control" 
+            <input type="text" name="titreCours" class="form-control"
            value="{{cours.titreCours}}" required />
           </div>
           <div class="form-group">
@@ -111,10 +111,13 @@
     	<table width="95%" style="border-collapse: separate; border-spacing: 2px;">
        <tr style="padding-bottom: 5px; border-bottom: solid 2px ;">
          <th>nom Chapitre</th>
-         <th>nombre de partie</th>
+         <th>parties</th>
+         <th>videos</th>
+         <th>files</th>
+         <th>quizzes</th>
          <th>edite</th>
          <th>delete</th>
-       </tr> 
+       </tr>
        {% for chap in chapitres %}
        <tr>
          <td>{{chap.titreChapitre}}</td>
@@ -125,11 +128,32 @@
                 {% endif %}
             {% endfor %}
          </td>
+         <td>
+           {% for cle, val in videos.items %}
+                {% if cle == chap.titreChapitre %}
+                    {{val}}
+                {% endif %}
+            {% endfor %}
+         </td>
+         <td>
+           {% for cle, val in files.items %}
+                {% if cle == chap.titreChapitre %}
+                    {{val}}
+                {% endif %}
+            {% endfor %}
+         </td>
+         <td>
+           {% for cle, val in quizzes.items %}
+                {% if cle == chap.titreChapitre %}
+                    {{val}}
+                {% endif %}
+            {% endfor %}
+         </td>
          <td><a href="{% url 'editeChapitre' idCours=cours.id idChapitre=chap.id %}" class="btn btn-primary btn-set"  >edite</a></td>
          <td><a href="{% url 'deleteChapitre' idCours=cours.id idChapitre=chap.id %}" class="btn btn-danger btn-set"  >delete</a></td>
        </tr>
        {% endfor %}
-       
+
       </table>
     </div>
   </div>

@@ -9,19 +9,21 @@
     <title>Afficher Cours</title>
     <!-- BOOTSTRAP CORE STYLE CSS -->
     <link href="{% static 'assets/css/bootstrap.css' %}" rel="stylesheet" />
+    <link href="{% static 'assets/css/step.css' %}?{% now 'U' %}" rel="stylesheet" />
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
     <!-- FONT AWESOME CSS -->
     <link href="{% static 'assets/css/font-awesome.min.css' %}" rel="stylesheet" />
      <!-- FLEXSLIDER CSS -->
     <link href="{% static 'assets/css/flexslider.css' %}" rel="stylesheet" />
     <!-- CUSTOM STYLE CSS -->
-    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />    
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
     <link href="{% static 'assets/css/sidebar.css'%}?{% now 'U' %}" rel="stylesheet" />
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>    
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
   <!-- Google	Fonts -->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css' />
 </head>
 <body onload="show('{{ cours.titreCours }}');">
-   
+
  <div class="navbar navbar-inverse navbar-fixed-top " id="menu">
         <div class="container">
             <div class="navbar-header">
@@ -41,43 +43,141 @@
                      <li><a href="#contact-sec"><i class="bx bxs-contact" ></i> CONTACT</a></li>
                 </ul>
             </div>
-           
+
         </div>
     </div>
       <!--NAVBAR SECTION END-->
 
 <!-- Sidebar -->
-<div class="container-fluid" style="margin-top: 65px; ">
- <div class="menu">
+<div class="container-fluid" style="margin-top: 65px; display:flex;">
+ <div class="menu " >
      <div class="logo-details" >
         <a href="#" onclick="show('{{cours.titreCours}}');" id="/{{cours.titreCours}}">
-        <i  ></i>
-        <span class="logo_name">{{ cours.titreCours | upper }}</span></a>
+        <i  class="bx bxs-book"></i>
+        <span class="logo_name">{{ cours.titreCours | truncatewords:1 | upper }}</span></a>
      </div>
      <hr style="size: 4px; color: white ; margin: 0px;">
      <ul class="nav-links">
          {% for chap in chapitres%}
             <li><a href="#" onclick="show('{{chap.id}}');" id="/{{chap.id}}">
-                <i  ></i>
+                <span calss="som" style="border:solid 5px; border-radius:2px 8px;margin:5px; color:white; padding:0px 5px !important; font-size:20px;"> {{forloop.counter}} </span>
                 <span class="links_name">{{chap.titreChapitre}} </span>
             </a></li>
          {% endfor %}
      </ul>
- </div>  
- <div class="contenu" >
+ </div>
+ <div class="contenu " >
         <section id= '{{ cours.titreCours }}' class="sec">
             <h1>{{cours.titreCours | upper}}</h1>
-            <img src="{{ cours.image.url }}" width="80%">
+            <img src="{{ cours.image.url }}" width="70%" height="400px">
             <h5>{{cours.description}}</h5>
         </section>
      {% for chap in chapitres %}
         <section id= '{{chap.id}}' class="sec">
             <h1>{{chap.titreChapitre | upper}}</h1>
+            <div class="step">
+                <ul>
+                {% for cle, val in videos.items %}
+                    {% if cle == chap.titreChapitre %}
+                            {% for vid in val %}
+                                <li class="/steps{{chap.id}}" id="/vid{{vid.id}}">
+                                    <a href="#" onclick="Part('vid'+{{vid.id}},{{chap.id}});">
+                                    <i class="bx bxs-video"></i>
+                                     </a>
+                                </li>
+                            {% endfor %}
+
+                    {% endif %}
+                {% endfor %}
+
+                {% for cle, val in files.items %}
+                    {% if cle == chap.titreChapitre %}
+                            {% for file in val %}
+                                <li class="/steps{{chap.id}}" id="/file{{file.id}}">
+                                    <a href="#" onclick="Part('file'+{{file.id}},{{chap.id}});">
+                                    <i class="bx bx-file"></i>
+                                     </a>
+                                </li>
+                            {% endfor %}
+
+                    {% endif %}
+                {% endfor %}
+
+                {% for cle, val in quizzes.items %}
+                    {% if cle == chap.titreChapitre %}
+                            {% for quiz in val %}
+                                <li class="/steps{{chap.id}}" id="/quiz{{quiz.id}}">
+                                    <a href="#" onclick="Part('quiz'+{{quiz.id}},{{chap.id}});">
+                                    <i class="bx bxs-pencil"></i>
+                                     </a>
+                                </li>
+                            {% endfor %}
+
+                    {% endif %}
+                {% endfor %}
+
+                {% for cle, val in parties.items %}
+                    {% if cle == chap.titreChapitre %}
+                            {% for part in val %}
+                                <li class="/steps{{chap.id}}" id="/part{{part.id}}">
+                                    <a href="#" onclick="Part('part'+{{part.id}},{{chap.id}});">
+                                    <i class="bx bxs-pencil"></i>
+                                     </a>
+                                </li>
+                            {% endfor %}
+
+                    {% endif %}
+                {% endfor %}
+                </ul>
+            </div>
+
+            {% for cle, val in videos.items %}
+                {% if cle == chap.titreChapitre %}
+                    {% for vid in val %}
+                        <section class="steps{{chap.id}}" id="vid{{vid.id}}" style="display: none;">
+                            <h3>{{vid.titre}}</h3>
+                            <div class="row " style="margin-top: 10px;" align="center">
+                            <video controls style="width: 72%; height: 400px;" class="clsV">
+                            <source src="{{ vid.videoFile.url}}"> Your browser does not support the video tag.
+                            </video>
+                            </div>
+                        </section>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+
+            {% for cle, val in files.items %}
+                {% if cle == chap.titreChapitre %}
+                    {% for file in val %}
+                        <section class="steps{{chap.id}}" id="file{{file.id}}" style="display: none;">
+                            <h3>{{file.titre}}</h3>
+                            <iframe src="{{file.lien.url}}" width="90%" height="400px"> </iframe>
+                        </section>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+
+            {% for cle, val in quizzes.items %}
+                {% if cle == chap.titreChapitre %}
+                    {% for quiz in val %}
+                        <section class="steps{{chap.id}}" id="quiz{{quiz.id}}" style="display: none;">
+                            <h3>{{quiz.titre}}</h3>
+                            <iframe src="{% url 'quizze' quiz.id %}" style="width:80%; min-height:500px; "> </iframe>
+                            <!-- <embed type="text/html" src="{% url 'quizze' quiz.id %}" style="width:80%; min-height: 500px; "> -->
+                            <!--<object data="abdohaida.pythonanywhere.com/afficherQuizze/{{quiz.id}}" type="text/html" style="width:80%; min-height: 500px; "></object>-->
+
+                        </section>
+                    {% endfor %}
+                {% endif %}
+            {% endfor %}
+
             {% for cle, val in parties.items %}
                 {% if cle == chap.titreChapitre %}
                     {% for part in val %}
-                        <h3>{{part.titrePartie}}</h3>
-                        <p>{{part.content}}</p>
+                        <section class="steps{{chap.id}}" id="part{{part.id}}" style="display: none;">
+                            <h3>{{part.titrePartie}}</h3>
+                            <p>{{part.content}}</p>
+                        </section>
                     {% endfor %}
                 {% endif %}
             {% endfor %}
@@ -85,7 +185,7 @@
      {% endfor %}
  </div>
 </div>
-      
+
 
 
  <div id="contact-sec"   >
@@ -102,8 +202,8 @@
              </div>
              <!--/.HEADER LINE END-->
            <div class="row set-row-pad"  data-scroll-reveal="enter from the bottom after 0.5s" >
-           
-               
+
+
                  <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
                     <form action="{% url 'contact' %}" method="post" enctype="multipart/form-data">
                      {% csrf_token %}
@@ -126,7 +226,7 @@
                 </div>
                </div>
                 </div>
-          </div> 
+          </div>
        </div>
      <div class="container">
              <div class="row set-row-pad"  >
@@ -162,18 +262,18 @@
           &copy 2014 yourdomain.com | All Rights Reserved |  <a href="http://binarytheme.com" style="color: #fff" target="_blank">Design by : binarytheme.com</a>
     </div>
      <!-- FOOTER SECTION END-->
-   
+
     <!--  Jquery Core Script -->
     <script src="{% static 'assets/js/jquery-1.10.2.js' %}"></script>
     <!--  Core Bootstrap Script -->
     <script src="{% static 'assets/js/bootstrap.js' %}"></script>
-    <!--  Flexslider Scripts --> 
+    <!--  Flexslider Scripts -->
          <script src="{% static 'assets/js/jquery.flexslider.js' %}"></script>
      <!--  Scrolling Reveal Script -->
     <script src="{% static 'assets/js/scrollReveal.js' %}"></script>
-    <!--  Scroll Scripts --> 
+    <!--  Scroll Scripts -->
     <script src="{% static 'assets/js/jquery.easing.min.js' %}"></script>
-    <!--  Custom Scripts --> 
+    <!--  Custom Scripts -->
          <script src="{% static 'assets/js/custom.js' %}"></script>
     <script type="text/javascript">
         function size() {
@@ -187,6 +287,13 @@
         }
 
         function show(idSection) {
+
+            var videos = document.getElementsByClassName("clsV");
+            for (i=0;i<videos.length;i++)
+            {
+                videos[i].pause();
+            }
+
             var links = document.links;
             for (i=0;i<links.length;i++)
                 links[i].classList.remove('active');
@@ -199,6 +306,37 @@
                 sections[i].style.display='none';
             }
             document.getElementById(idSection).style.display='block';
+
+            // ----
+            document.getElementsByClassName("steps"+idSection)[0].style.display ='block';
+            var steps = document.getElementsByClassName("/steps"+idSection);
+            for (i=0;i<steps.length;i++)
+                steps[i].classList.remove('active');
+            document.getElementsByClassName("/steps"+idSection)[0].classList.add('active');
+
+        }
+
+        function Part(id, idChapitre) {
+            var i;
+
+            var videos = document.getElementsByClassName("clsV");
+            for (i=0;i<videos.length;i++)
+            {
+                videos[i].pause();
+            }
+
+            var sections = document.getElementsByClassName('steps'+idChapitre);
+            for (i=0;i<sections.length;i++)
+            {
+                sections[i].style.display='none';
+            }
+            document.getElementById(id).style.display='block';
+
+            var steps = document.getElementsByClassName("/steps"+idChapitre);
+            for (i=0;i<steps.length;i++)
+                steps[i].classList.remove('active');
+            document.getElementById("/"+id).classList.add('active');
+
         }
     </script>
 </body>

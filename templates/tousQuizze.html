@@ -14,12 +14,12 @@
      <!-- FLEXSLIDER CSS -->
 <link href="{% static 'assets/css/flexslider.css' %}" rel="stylesheet" />
     <!-- CUSTOM STYLE CSS -->
-    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />    
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
   <!-- Google	Fonts -->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css' />
 </head>
 <body >
-   
+
  <div class="navbar navbar-inverse navbar-fixed-top " id="menu">
         <div class="container">
             <div class="navbar-header">
@@ -39,7 +39,7 @@
                      <li><a href="#contact-sec"><i class="bx bxs-contact" ></i> CONTACT</a></li>
                 </ul>
             </div>
-           
+
         </div>
     </div>
       <!--NAVBAR SECTION END-->
@@ -56,21 +56,23 @@
   </div>
 
 
-  <div class="row" >
-    {% for quiz in quizze %}
-    <div class="col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.4s">
-      <div class="about-div">
-        <img src="{{ quiz.image.url }}" class="card-img-top" alt="card3" width="100%" style="max-height: 120px;">
-        <h3 >{{ quiz.titre | upper }}</h3>
-        <hr />
-        <p >
-          {{ quiz.description | truncatechars:30 }}
-        </p>
-        <a href="{% url 'afficherQuizze' quiz.id %}" class="btn btn-info btn-set"  >ACCÉDER</a>
+
+      <div class="row" >
+        {% for quiz in quizze %}
+        <div class="col-lg-4  col-md-4 col-sm-4" data-scroll-reveal="enter from the bottom after 0.4s" style="margin-bottom: 20px; ">
+          <div class="about-div" style="background: rgba(200,200,200,0.5); min-height: 400px; border-radius: 10px;">
+            <img src="{{ quiz.image.url }}" class="card-img-top" alt="card3" width="100%" style="max-height: 120px;">
+            <h3 >{{ quiz.titre |truncatewords:2 | upper }}</h3>
+            <hr />
+            <hr />
+            <p >
+              {{ quiz.description | truncatechars:30 }}
+            </p>
+            <a href="{% url 'afficherQuizze' quiz.id %}" class="btn btn-info btn-set  con rounded-pill"  >ACCÉDER</a>
+          </div>
+        </div>
+        {% endfor %}
       </div>
-    </div>
-    {% endfor %}
-  </div>
 </div>
 </div>
  <div id="contact-sec"   >
@@ -87,8 +89,8 @@
              </div>
              <!--/.HEADER LINE END-->
            <div class="row set-row-pad"  data-scroll-reveal="enter from the bottom after 0.5s" >
-           
-               
+
+
                  <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
                     <form action="{% url 'contact' %}" method="post" enctype="multipart/form-data">
                      {% csrf_token %}
@@ -111,7 +113,7 @@
                 </div>
                </div>
                 </div>
-          </div> 
+          </div>
        </div>
      <div class="container">
              <div class="row set-row-pad"  >
@@ -147,18 +149,18 @@
           &copy 2014 yourdomain.com | All Rights Reserved |  <a href="http://binarytheme.com" style="color: #fff" target="_blank">Design by : binarytheme.com</a>
     </div>
      <!-- FOOTER SECTION END-->
-   
+
     <!--  Jquery Core Script -->
     <script src="{% static 'assets/js/jquery-1.10.2.js' %}"></script>
     <!--  Core Bootstrap Script -->
     <script src="{% static 'assets/js/bootstrap.js' %}"></script>
-    <!--  Flexslider Scripts --> 
+    <!--  Flexslider Scripts -->
          <script src="{% static 'assets/js/jquery.flexslider.js' %}"></script>
      <!--  Scrolling Reveal Script -->
     <script src="{% static 'assets/js/scrollReveal.js' %}"></script>
-    <!--  Scroll Scripts --> 
+    <!--  Scroll Scripts -->
     <script src="{% static 'assets/js/jquery.easing.min.js' %}"></script>
-    <!--  Custom Scripts --> 
+    <!--  Custom Scripts -->
          <script src="{% static 'assets/js/custom.js' %}"></script>
 </body>
 </html>

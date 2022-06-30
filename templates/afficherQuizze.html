@@ -9,18 +9,35 @@
     <title>Afficher Quizze</title>
     <!-- BOOTSTRAP CORE STYLE CSS -->
     <link href="{% static 'assets/css/bootstrap.css' %}" rel="stylesheet" />
-    
+
     <!-- FONT AWESOME CSS -->
 <link href="{% static 'assets/css/font-awesome.min.css' %}" rel="stylesheet" />
      <!-- FLEXSLIDER CSS -->
 <link href="{% static 'assets/css/flexslider.css' %}" rel="stylesheet" />
     <!-- CUSTOM STYLE CSS -->
-    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />    
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet" />
   <!-- Google	Fonts -->
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css' />
+	<style>
+	.qu{
+	    margin: 40px;
+	    border: 1px solid #081D45;
+	    padding: 20px;
+	    width: 70%;
+	    border-radius: 5px;
+	}
+	@media (max-width: 400px){
+
+	    .qu{
+	        width: 95%;
+	        margin:40px 0px;
+	    }
+	}
+
+	</style>
 </head>
 <body >
-   
+
  <div class="navbar navbar-inverse navbar-fixed-top " id="menu">
         <div class="container">
             <div class="navbar-header">
@@ -40,21 +57,21 @@
                      <li><a href="#contact-sec"><i class="bx bxs-contact" ></i> CONTACT</a></li>
                 </ul>
             </div>
-           
+
         </div>
     </div>
       <!--NAVBAR SECTION END-->
     <div class="container  set-pad justify-content-center" style="width: 100%;background-color: #f5f6fa;" align="center">
-    <div class="row justify-content-center" style="margin: 40px; border: 1px solid #081D45; padding: 20px;width: 70%; border-radius: 5px;" align="center" >
-        
+    <div class="container  qu" align="center" >
+
         <div class="row" style="display: none;" id="content">
-            <div class="col" style="margin: 20px 20px -20px 20px;">
-                <span style="flex: 1; ">Score : <span id="res"></span>/{{nbr_questions}}</span>
+            <div class="col clearfix" style="margin: 20px 20px -20px 20px;">
+                <span style="float: left; ">Score : <span id="res"></span>/{{nbr_questions}}</span>
                 <span style="float: right;">Question : <span id="numQ"></span>/{{nbr_questions}}</span>
             </div>
             <hr size="5px" width="90%" style="color : #f5f6fa;">
             <div class="col alert alert-info" style="margin: 20px;">
-                <label class="form-control " id="quest"></label>
+                <label  class="form-control " style="height:100%;" id="quest"></label>
             </div>
             <div class="col" style="margin: 20px;">
                 <input type="button" class="form-control btn btn-warning" id="choix1" value="" onclick="calculer('choix1');">
@@ -89,7 +106,7 @@
         </div>
         <div class="row" id="result" style="display: none;">
             <div class="col alert alert-success" style="margin: 20px;">
-                <label class="form-control " id="score"></label>
+                <label class="form-control " style="height:100%;" id="score"></label>
             </div>
         </div>
     </div>
@@ -108,8 +125,8 @@
              </div>
              <!--/.HEADER LINE END-->
            <div class="row set-row-pad"  data-scroll-reveal="enter from the bottom after 0.5s" >
-           
-               
+
+
                  <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2">
                     <form action="{% url 'contact' %}" method="post" enctype="multipart/form-data">
                      {% csrf_token %}
@@ -132,7 +149,7 @@
                 </div>
                </div>
                 </div>
-          </div> 
+          </div>
        </div>
      <div class="container">
              <div class="row set-row-pad"  >
@@ -168,18 +185,18 @@
           &copy 2014 yourdomain.com | All Rights Reserved |  <a href="http://binarytheme.com" style="color: #fff" target="_blank">Design by : binarytheme.com</a>
     </div>
      <!-- FOOTER SECTION END-->
-   
+
     <!--  Jquery Core Script -->
     <script src="{% static 'assets/js/jquery-1.10.2.js' %}"></script>
     <!--  Core Bootstrap Script -->
     <script src="{% static 'assets/js/bootstrap.js' %}"></script>
-    <!--  Flexslider Scripts --> 
+    <!--  Flexslider Scripts -->
          <script src="{% static 'assets/js/jquery.flexslider.js' %}"></script>
      <!--  Scrolling Reveal Script -->
     <script src="{% static 'assets/js/scrollReveal.js' %}"></script>
-    <!--  Scroll Scripts --> 
+    <!--  Scroll Scripts -->
     <script src="{% static 'assets/js/jquery.easing.min.js' %}"></script>
-    <!--  Custom Scripts --> 
+    <!--  Custom Scripts -->
          <script src="{% static 'assets/js/custom.js' %}"></script>
     <script type="text/javascript">
         var data = JSON.parse("{{questions|escapejs}}");
@@ -197,6 +214,12 @@
             document.getElementById("choix2").value = data[0]["choix2"];
             document.getElementById("choix3").value = data[0]["choix3"];
             document.getElementById("choix4").value = data[0]["choix4"];
+
+             if (index == size - 1)
+            {
+                document.getElementById("suivant").style.display ="none";
+                document.getElementById("terminer").style.display ="block";
+            }
         }
 
         function calculer(choix) {

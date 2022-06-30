@@ -36,9 +36,19 @@ class Partie(models.Model):
 	def __str__(self):
 		return self.titrePartie
 
+class File(models.Model):
+	titre = models.CharField(max_length=100)
+	lien = models.FileField(upload_to='file/', null=True, verbose_name="Le fichier")
+
+	def __str__(self):
+		return self.titre
+
 class Chapitre(models.Model):
 	titreChapitre = models.CharField(max_length=100)
 	parties = models.ManyToManyField(Partie)
+	files = models.ManyToManyField(File)
+	videos = models.ManyToManyField(Video)
+	quizzes = models.ManyToManyField(Quizze)
 
 	def __str__(self):
 		return self.titreChapitre

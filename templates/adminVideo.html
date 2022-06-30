@@ -89,15 +89,15 @@
                   <source src="{{ vid.videoFile.url}}">
                   Your browser does not support the video tag.
               </video>
-              <h3 > {{vid.titre | upper}} </h3>
+              <h3 > {{vid.titre | truncatewords:2 |upper}} </h3>
               <p >
-                    {{vid.description | truncatechars:30 }}  
+                    {{vid.description | truncatechars:30 }}
               </p>
               <a href="{% url 'deleteVideo' vid.id %}" class="btn btn-danger btn-set"  >delete</a>
               <a href="{% url 'editeVideo' vid.id %}" class="btn btn-primary btn-set"  >edite</a>
           </div>
         </div>
-      {% endfor %}           
+      {% endfor %}
       </div>
   </section>
 

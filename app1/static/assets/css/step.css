@@ -1,0 +1,56 @@
+.step li {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 15px;
+  font-family: arial, calibri, sans-serif;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 50%;
+  background: rgb(5, 68, 104);
+  display: inline-block;
+  color: white;
+  position: relative;
+  margin: 0px 10px;
+  box-shadow: 0 0 3px 3px grey;
+}
+
+.step li i{
+  font-size: 20px;
+  font-weight: 500;
+  color: #fff;
+  min-width: 30px;
+  text-align: center;
+  vertical-align:middle;
+}
+
+.step li::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: -100%;
+  width: 100%;
+  height: 1px;
+  background: rgb(5, 68, 104);
+  z-index: -1;
+}
+
+.step li:first-child::before {
+  display: none;
+}
+
+.step li:after{
+
+}
+
+.step .active {
+  background: #081D45;
+}
+
+/*.step .active ~ li {
+  background: rgb(5, 68, 104);
+}
+
+.step .active ~ li::before {
+  background: rgb(5, 68, 104);
+}*/
